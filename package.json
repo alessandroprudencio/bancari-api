@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "start": "nodemon --exec babel-node index"
+    "start": "babel-node index",
+    "dev" : "nodemon --exec babel-node index"
   },
-  "author": "",
+  "author": "Alessandro Prudencio da Cruz Silva",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
