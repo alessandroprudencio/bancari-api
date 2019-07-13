@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 router
     .get('/', getResident)
-    .getById('/', getByIdResident)
+    .get('/:id', getByIdResident)
     .post('/', createResident)
     .put('/:id', updateResident)
     .delete('/:id', deleteResident)
