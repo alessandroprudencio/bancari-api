@@ -15,7 +15,7 @@ import authRoute from './routes/authRoute'
 app.use('/auth', authRoute)
 
 
-app.use('/', req,res=>{
+app.use('/', (req,res)=>{
     res.send('AHHHHHHHHHHHHHHH safadim bem vindo a api da Bancari de Gestão de condominiios')
 })
 
