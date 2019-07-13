@@ -12,7 +12,7 @@ import multer from 'multer'
 import path from 'path'
 
 const getUser = (req, res) => {
-    knex.select('name', 'email', 'admin').from('users').then(data => {
+    knex.select('id','name', 'email', 'admin').from('users').then(data => {
         res.send(data)
     }).catch(err=>res.send(err))
 
