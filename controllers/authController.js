@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import bcrypt from 'bcrypt'
 
-const config = require('../db/knexfile')['production']
+const config = require('../db/knexfile')['development']
 const knex = require('knex')(config)
 
 
