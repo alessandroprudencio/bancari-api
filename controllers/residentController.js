@@ -37,14 +37,16 @@ const deleteResident = (req, res) => {
 
     knex.select('id').from('residents').where({ id: req.params.id })
         .then(resident => {
-            if (!resident.length) res.send({ message: "Usuário não encontrado" })
+            if (!resident.length)return res.send({ message: "Usuário não encontrado" })
 
             let token = req.headers.authorization.split(" ")[1]
             if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
+           
+            res.send(req.params.id)
 
             knex('residents').where({ id: req.params.id }).delete()
                 .then(() => res.send({ message: "Excluido com sucesso!" }))
-                .catch(err => res.send({ message: err }))
+                .catch(err => res.send({ message: err.sqlMessage }))
 
         }).catch(err => res.status(400).send(err))
 
