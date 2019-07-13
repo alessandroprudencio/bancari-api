@@ -16,11 +16,11 @@ app.use('/auth', authRoute)
 
 
 app.use('/', (req,res)=>{
-    res.send('AHHHHHHHHHHHHHHH safadim bem vindo a api da Bancari de Gestão de condominiios')
+    res.sendFile(__dirname + "/index.html")
 })
 
 app.listen(process.env.PORT, () => {
-    console.log('Servidor iniciado : ' + process.env.PORT)
+    console.log('Servidor iniciado ' + process.env.PORT)
 })
 
 
