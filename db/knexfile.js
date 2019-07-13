@@ -24,11 +24,12 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password'
+      host:'us-cdbr-iron-east-02.cleardb.net',
+      database: 'heroku_7bc1b53f7100315',
+      user: 'badc4d7ee11162',
+      password: 'eec6ebc1'
     },
     pool: {
       min: 2,
