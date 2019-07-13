@@ -31,20 +31,20 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
     
 
-    const upload = multer({
-        storage: multer.diskStorage({
-            destination: './uploads/profile',
-            filename: (req, file, next) => {
-                next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
-            }
-        }),
-        limits: { fileSize: 5 * (1024 * 1024) },
-        fileFilter: (req, file, next) => {
-            var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
-            if (allowedMimes.indexOf(file.mimetype)==0) next(null, true)
-            else return res.status(400).send({ message: "Extensão de foto não permitida!" })
-        }
-    }).single('image')
+    // const upload = multer({
+    //     storage: multer.diskStorage({
+    //         destination: './uploads/profile',
+    //         filename: (req, file, next) => {
+    //             next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
+    //         }
+    //     }),
+    //     limits: { fileSize: 5 * (1024 * 1024) },
+    //     fileFilter: (req, file, next) => {
+    //         var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+    //         if (allowedMimes.indexOf(file.mimetype)==0) next(null, true)
+    //         else return res.status(400).send({ message: "Extensão de foto não permitida!" })
+    //     }
+    // }).single('image')
 
     
 
@@ -77,16 +77,15 @@ const createUser = async (req, res) => {
     //   });
     //   return
 
-    upload(req, res, err => {
-        if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-        req.body.image = req.file.path
-    })
+    // upload(req, res, err => {
+    //     if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
+    //     req.body.image = req.file.path
+    // })
 
 
     knex('users').insert(req.body)
         .then(() => {
             res.json({ message: "Usuário cadastrado com sucesso!" })
-        
         }).catch(error => {
             if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
         })
