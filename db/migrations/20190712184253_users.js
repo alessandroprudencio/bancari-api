@@ -7,7 +7,7 @@ exports.up = function (knex) {
       table.string('password')
       table.string('image')
       table.boolean('admin').defaultTo(false)
-      table.timestamps(true, true)
+      table.timestamps(true)
     })
   };
   
