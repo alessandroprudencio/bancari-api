@@ -14,7 +14,8 @@ import path from 'path'
 const getUser = (req, res) => {
     knex.select('name', 'email', 'admin').from('users').then(data => {
         res.send(data)
-    });
+    }).catch(err=>res.send(err))
+
 }
 
 const createUser = async (req, res) => {
