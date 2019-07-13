@@ -4,7 +4,7 @@ const knex = require('knex')(config)
 import validator from 'validator'
 
 const getResident = (req, res) => {
-    knex.select('name', 'email', 'endereco', 'telefone', 'numero').from('residents').then(data => {
+    knex.select('name', 'email', 'address', 'phone', 'number_address').from('residents').then(data => {
         res.send(data)
     });
 }
