@@ -9,7 +9,7 @@ module.exports = {
       database: 'bancari',
     },
     migrations: {
-      directory: __dirname + '/db/migrations',
+      directory: __dirname + '/migrations',
     },
   },
 
@@ -22,7 +22,7 @@ module.exports = {
       password: 'eec6ebc1'
     },
     migrations: {
-      directory: __dirname + '/db/migrations',
+      directory: __dirname + '/migrations',
     },
   }
 
