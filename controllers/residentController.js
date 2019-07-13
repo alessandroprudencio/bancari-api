@@ -10,6 +10,14 @@ const getResident = (req, res) => {
     .catch(err=>res.send(err))
 }
 
+const getByIdResident = (req, res) => {
+    knex.select('id','name', 'email', 'address', 'phone', 'number_address').from('residents').where({id:req.params.id})
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err=>res.send(err))
+}
+
 const createResident = async (req, res) => {
     const { name, email, address, phone, number_address } = req.body
 
@@ -39,9 +47,9 @@ const deleteResident = (req, res) => {
         .then(resident => {
             if (!resident.length)return res.send({ message: "Usuário não encontrado" })
 
-            // let token = req.headers.authorization.split(" ")[1]
-            // if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
-
+            let token = req.headers.authorization.split(" ")[1]
+            if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
+           
             knex('residents').where({ id: req.params.id }).delete()
                 .then(() => res.send({ message: "Excluido com sucesso!" }))
                 .catch(err => res.send({ message: err.sqlMessage }))
@@ -51,4 +59,4 @@ const deleteResident = (req, res) => {
 
 }
 
-export { getResident, createResident, updateResident, deleteResident }
+export { getResident, getByIdResident, createResident, updateResident, deleteResident }
