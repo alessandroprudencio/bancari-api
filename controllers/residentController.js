@@ -39,10 +39,8 @@ const deleteResident = (req, res) => {
         .then(resident => {
             if (!resident.length)return res.send({ message: "Usuário não encontrado" })
 
-            let token = req.headers.authorization.split(" ")[1]
-            if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
-           
-            res.send('req.params.id')
+            // let token = req.headers.authorization.split(" ")[1]
+            // if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
 
             knex('residents').where({ id: req.params.id }).delete()
                 .then(() => res.send({ message: "Excluido com sucesso!" }))
