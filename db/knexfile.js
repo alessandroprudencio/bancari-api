@@ -1,6 +1,6 @@
 module.exports = {
 
-  production: {
+  development: {
     client: 'mysql',
     connection: {
       host: '127.0.0.1',
@@ -30,11 +30,7 @@ module.exports = {
       database: 'heroku_7bc1b53f7100315',
       user: 'badc4d7ee11162',
       password: 'eec6ebc1'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
+    }
   }
 
 };
