@@ -4,10 +4,10 @@ const knex = require('knex')(config)
 import validator from 'validator'
 
 const getResident = (req, res) => {
-    res.send('entrou aqui')
     knex.select('name', 'email', 'address', 'phone', 'number_address').from('residents').then(data => {
         res.send(data)
-    });
+    })
+    .catch(err=>res.send(err))
 }
 
 const createResident = async (req, res) => {
