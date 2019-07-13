@@ -14,8 +14,13 @@ app.use('/user', verifyJwt, userRoute)
 import authRoute from './routes/authRoute'
 app.use('/auth', authRoute)
 
+
+app.use('/', req,res=>{
+    res.send('AHHHHHHHHHHHHHHH safadim bem vindo a api da Bancari de Gestão de condominiios')
+})
+
 app.listen(process.env.PORT, () => {
-    console.log('Servidor rodando ' + process.env.PORT)
+    console.log('Servidor iniciado : ' + process.env.PORT)
 })
 
 
