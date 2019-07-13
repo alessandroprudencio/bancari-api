@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = function (knex) {
     return knex.schema.createTable('residents', table => {
         table.increments('id').primary()
         table.string('name')
@@ -9,9 +9,9 @@ exports.up = function(knex) {
         table.string('phone')
         table.integer('number_address')
         table.timestamp('created_at').defaultTo(knex.fn.now());
-      })
+    })
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
     return knex.schema.dropTable('residents')
 };
