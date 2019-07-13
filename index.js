@@ -12,9 +12,7 @@ import userRoute from './routes/userRoute'
 app.use('/user', verifyJwt, userRoute)
 
 import residentRoute from './routes/residentRoute'
-app.use('/resident',  (req,res)=>{
-    res.send('lista de residentes')
-})
+app.use('/resident',  residentRoute)
 
 import authRoute from './routes/authRoute'
 app.use('/auth',  authRoute)
