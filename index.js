@@ -14,7 +14,6 @@ app.use('/user', verifyJwt, userRoute)
 import authRoute from './routes/authRoute'
 app.use('/auth', authRoute)
 
-
 app.use('/', (req,res)=>{
     res.sendFile(__dirname + "/index.html")
 })
