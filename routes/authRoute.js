@@ -1,4 +1,4 @@
-import { login } from '../controllers/authController'
+import login  from '../controllers/authController'
 
 const router = require('express').Router()
 
