@@ -2,7 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('reservations', table => {
         table.increments('id').primary()
-        table.foreign('resident_id').references("id").inTable("residents").index().onDelete("CASCADE").unsigned()
+        table.string('resident_id').foreign().references("id").inTable("residents").index().onDelete("CASCADE").unsigned()
         table.string('local').notNullable();
         table.datetime('date').notNullable()
         table.timestamp('created_at').defaultTo(knex.fn.now());
