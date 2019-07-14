@@ -12,9 +12,22 @@ import multer from 'multer'
 import path from 'path'
 
 const getUser = (req, res) => {
-    knex.select('id','name', 'email', 'admin').from('users').then(data => {
+    knex.select('id', 'name', 'email', 'admin').from('users').then(data => {
         res.send(data)
-    }).catch(err=>res.send(err))
+    }).catch(err => res.send(err))
+
+}
+
+const login = async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email || !password) res.status(400).send({ message: 'Passe os dados e não me fo!@#!' })
+
+    let user = await knex('users').select('email', 'password', 'admin').whereRaw('email = ?', email)
+    if (!user.length) res.status(404).send({ message: 'E-mail não encontrado' })
+
+    if (bcrypt.compareSync(req.body.password, user[0].password)) res.status(200).send({ email: email, token: jwt.sign({ user: req.body, admin: user[0].admin }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
+    else res.status(401).send({ message: 'Dados invalidos' })
 
 }
 
@@ -30,7 +43,7 @@ const createUser = async (req, res) => {
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
     req.body.password = bcrypt.hashSync(password, 10)
-    
+
 
     // const upload = multer({
     //     storage: multer.diskStorage({
@@ -47,7 +60,7 @@ const createUser = async (req, res) => {
     //     }
     // }).single('image')
 
-    
+
 
     // const transporter = await nodemailer.createTransport({
     //     service:process.env.EMAIL_service,
@@ -120,4 +133,4 @@ const deleteUser = (req, res) => {
 
 }
 
-export { getUser, createUser, updateUser, deleteUser }
+export { getUser, createUser, login, updateUser, deleteUser }

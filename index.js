@@ -14,9 +14,6 @@ app.use('/user', verifyJwt, userRoute)
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
 
-import authRoute from './routes/authRoute'
-app.use('/auth',  authRoute)
-
 app.use('/', (req,res)=>{
     res.sendFile(__dirname + "/index.html")
 })
