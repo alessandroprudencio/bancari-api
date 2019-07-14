@@ -7,7 +7,6 @@ const knex = require('knex')(config)
 import validator from 'validator'
 
 const login = async (req, res) => {
-    res.send('entrou')
     const { email, password } = req.body
 
     if (!email || !password) res.status(400).send({ message: 'Passe os dados e não me fo!@#!' })
