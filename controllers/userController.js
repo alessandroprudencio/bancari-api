@@ -19,6 +19,15 @@ const getUser = (req, res) => {
 
 }
 
+const getUserByIdUser = (req, res) => {
+    knex.select('id', 'name', 'email', 'admin').from('users').where({id:req.params.id})
+        .then(data => {
+            res.send(data)
+        }).catch(err => res.send(err))
+
+}
+
+
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword, image } = req.body
 
@@ -121,4 +130,4 @@ const deleteUser = (req, res) => {
 
 }
 
-export { getUser, createUser, updateUser, deleteUser }
+export { getUser, getUserByIdUser,  createUser, updateUser, deleteUser }
