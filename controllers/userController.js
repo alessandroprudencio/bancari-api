@@ -12,7 +12,8 @@ import multer from 'multer'
 import path from 'path'
 
 const getUser = (req, res) => {
-    knex.select('id', 'name', 'email', 'admin').from('users').then(data => {
+    knex.select('id', 'name', 'email', 'admin').from('users')
+    .then(data => {
         res.send(data)
     }).catch(err => res.send(err))
 
@@ -27,7 +28,7 @@ const login = async (req, res) => {
     if (!user.length) res.status(404).send({ message: 'E-mail não encontrado' })
 
     if (bcrypt.compareSync(req.body.password, user[0].password)) res.status(200).send({ email: email, token: jwt.sign({ user: req.body, admin: user[0].admin }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
-    else res.status(401).send({ message: 'Dados invalidos' })
+    else res.status(401).send({ message: 'Dados inválidos' })
 
 }
 
@@ -112,21 +113,21 @@ const updateUser = (req, res) => {
 
     knex('users').update(req.body)
         .then(() => res.send({ message: "Atualizado com sucesso!" }))
-        .catch(err => res.send({ message: err.sqlMessage }))
+        .catch(err => res.status(400).send({ message: err.sqlMessage }))
 }
 
 const deleteUser = (req, res) => {
 
     knex.select('id').from('users').where({ id: req.params.id })
         .then(user => {
-            if (!user.length) res.send({ message: "Usuário não encontrado" })
+            if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
 
             let token = req.headers.authorization.split(" ")[1]
             if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
 
             knex('user ').where({ id: req.params.id }).delete()
                 .then(() => res.send({ message: "Excluido com sucesso!" }))
-                .catch(err => res.send({ message: err.sqlMessage }))
+                .catch(err => res.status(400).send({ message: err.sqlMessage }))
 
         }).catch(err => res.status(400).send(err))
 
