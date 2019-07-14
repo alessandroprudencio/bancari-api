@@ -18,13 +18,6 @@ app.use('/', (req,res)=>{
     res.sendFile(__dirname + "/index.html")
 })
 
-app.get('*', function(req, res){
-    res.status(404).send({message:"Xupim essa rota não existe"});
-  });
-  
-
-app.listen(process.env.PORT, () => {
-    console.log('Servidor iniciado ' + process.env.PORT)
-})
+app.listen(process.env.PORT, () => {console.log('Servidor iniciado ' + process.env.PORT)})
 
 
