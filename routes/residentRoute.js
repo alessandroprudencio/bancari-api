@@ -1,4 +1,4 @@
-import { getResident, getByIdResident , createResident, updateResident, deleteResident } from '../controllers/residentController'
+import { getResident, getByIdResident, createResident, updateResident, deleteResident } from '../controllers/residentController'
 
 const router = require('express').Router()
 

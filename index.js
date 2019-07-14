@@ -8,6 +8,9 @@ app.use(bodyParser.json())
 
 import verifyJwt from './middleware/verifyJwt'
 
+import authRoute from './routes/authRoute'
+app.use('/login', authRoute)
+
 import userRoute from './routes/userRoute'
 app.use('/user', verifyJwt, userRoute)
 

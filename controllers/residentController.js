@@ -4,19 +4,19 @@ const knex = require('knex')(config)
 import validator from 'validator'
 
 const getResident = (req, res) => {
-    knex.select('id','name', 'email', 'address', 'phone', 'number_address').from('residents')
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err=>res.send(err))
+    knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents')
+        .then(data => {
+            res.send(data)
+        })
+        .catch(err => res.send(err))
 }
 
 const getByIdResident = (req, res) => {
-    knex.select('id','name', 'email', 'address', 'phone', 'number_address').from('residents').where({id:req.params.id})
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err=>res.send(err))
+    knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents').where({ id: req.params.id })
+        .then(data => {
+            res.send(data)
+        })
+        .catch(err => res.send(err))
 }
 
 const createResident = async (req, res) => {
@@ -25,7 +25,7 @@ const createResident = async (req, res) => {
     if (!name || !email || !address || !phone || !number_address) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
-    
+
 
     knex('residents').insert(req.body)
         .then(() => {
@@ -46,11 +46,11 @@ const deleteResident = (req, res) => {
 
     knex.select('id').from('residents').where({ id: req.params.id })
         .then(resident => {
-            if (!resident.length)return res.status(404).send({ message: "Usuário não encontrado" })
+            if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
 
             let token = req.headers.authorization.split(" ")[1]
             if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
-           
+
             knex('residents').where({ id: req.params.id }).delete()
                 .then(() => res.send({ message: "Excluido com sucesso!" }))
                 .catch(err => res.status(400).send({ message: err.sqlMessage }))
