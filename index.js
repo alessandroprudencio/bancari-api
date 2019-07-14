@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 import verifyJwt from './middleware/verifyJwt'
 
 import userRoute from './routes/userRoute'
-app.use('/user', verifyJwt, userRoute)
+app.use('/user', userRoute)
 
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
