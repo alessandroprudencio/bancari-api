@@ -1,4 +1,4 @@
-import { getReservation, getByIdReservation, createReservation, updateReservation, deleteReservation } from '../controllers/ReservationController'
+import { getReservation, getByIdReservation, createReservation, updateReservation, deleteReservation } from '../controllers/reservationController'
 
 const router = require('express').Router()
 
