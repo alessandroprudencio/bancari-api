@@ -2,7 +2,9 @@ const config = require('../db/knexfile')['production']
 const knex = require('knex')(config)
 
 const getReservation = (req, res) => {
-    knex.select('*').from('reservations')
+
+    knex(knex.ref('reservations').withSchema('residents'))
+    .select(['name', knex.ref('local')])
         .then(data => {
             res.send(data)
         })
@@ -24,7 +26,7 @@ const createReservation = async (req, res) => {
 
     knex('reservations').insert(req.body)
         .then(() => {
-            res.json({ message: "Reservado efetuada com sucesso!" })
+            res.json({ message: "Reserva efetuada com sucesso!" })
         }).catch(error => {
             if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: error })
         })
