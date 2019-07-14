@@ -20,4 +20,5 @@ const login = async (req, res) => {
     else res.status(401).send({ message: 'Dados inválidos' })
 
 }
-export default login
+
+export default {login}
