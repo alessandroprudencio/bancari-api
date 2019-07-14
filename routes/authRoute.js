@@ -3,6 +3,6 @@ import { login } from '../controllers/authController'
 const router = require('express').Router()
 
 router
-    .get('/', login)
+    .post('/', login)
 
 export default router
