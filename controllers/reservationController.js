@@ -3,7 +3,7 @@ const knex = require('knex')(config)
 
 const getReservation = (req, res) => {
 
-    knex('reservations').join('residents', 'residents.id','reservations.resident_id' )
+    knex('reservations').join('residents', 'residents.id','reservations.resident_id').select('residents.name','reservations.local', 'reservations.data')
         .then(data => {
             res.send(data)
         })
