@@ -24,6 +24,6 @@ app.use('/', (req,res)=>{
     res.sendFile(__dirname + "/index.html")
 })
 
-app.listen(process.env.PORT, () => {console.log('Servidor iniciado ' + process.env.PORT)})
+app.listen(process.env.PORT, () => {console.log('Servidor iniciado ' + process.env.PORT || 3000)})
 
 
