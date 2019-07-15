@@ -1,4 +1,4 @@
-const knex = require('knex')(require('../db/knexfile')['development'])
+const knex = require('knex')(require('../db/knexfile')['production'])
 
 const getReservation = (req, res) => {
 
