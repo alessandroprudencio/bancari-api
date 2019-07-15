@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const config = require('../db/knexfile')[process.env.NODE_ENV]
-const knex = require('knex')(config)
+const knex = require('knex')(require('../db/knexfile')['development'])
 
 import validator from 'validator'
 
