@@ -52,7 +52,7 @@
             <button class="btn btn-primary" type="submit">ENVIAR</button>
         </form>
         <div id="app">
-            <img v-for="user in users" :src="/file/+user.image" width="150" />
+            <img v-if="user.image" v-for="user in users" :src="/file/+user.image" width="150" />
         </div>
     </div>
 </body>
@@ -72,15 +72,6 @@
                 axios.get('https://bancari-api.herokuapp.com/user')
                     .then(res => {
                         this.users = res.data
-                        console.log(this.users)
-                        // for (let i = 0; i <= res.data.length; i++) {
-                        //     const element = res.data;
-                        //     if (element.length > 0) {
-                        //         if (element[i] != undefined) {
-                        //             imgId.src = 'https://bancari-api.herokuapp.com/file/' + element[i].image
-                        //         }
-                        //     }
-                        // }
                     })
         }
     },
