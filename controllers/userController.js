@@ -12,7 +12,7 @@ import path from 'path'
 import { ESRCH } from 'constants';
 
 const getUser = (req, res) => {
-    knex.select('id', 'name', 'email', 'admin').from('users')
+    knex.select('id', 'name', 'email', 'admin', 'image').from('users')
         .then(data => {
             res.send(data)
         }).catch(err => res.send(err))
@@ -30,15 +30,15 @@ const getUserByIdUser = (req, res) => {
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword, image } = req.body
 
-    if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    // if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
-    if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
+    // if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
-    if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
-    else delete req.body.confirmPassword
+    // if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
+    // else delete req.body.confirmPassword
 
-    if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
-    req.body.password = bcrypt.hashSync(password, 10)
+    // if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
+    // req.body.password = bcrypt.hashSync(password, 10)
 
 
     const upload = multer({
@@ -59,11 +59,13 @@ const createUser = async (req, res) => {
     upload(req, res, err => {
         if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
         req.body.image = req.file.path
+        knex('users').insert(req.body)
+        .then(() => {
+            res.json({ message: "Usuário cadastrado com sucesso!" })
+        }).catch(error => {
+            if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
+        })
     })
-
-    
-    return
-
 
 
     // const transporter = await nodemailer.createTransport({
@@ -96,12 +98,7 @@ const createUser = async (req, res) => {
     //   return
 
 
-    knex('users').insert(req.body)
-        .then(() => {
-            res.json({ message: "Usuário cadastrado com sucesso!" })
-        }).catch(error => {
-            if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
-        })
+ 
 }
 
 const updateUser = (req, res) => {

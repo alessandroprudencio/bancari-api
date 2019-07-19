@@ -24,6 +24,8 @@
             <input type="file" name="image"/>
             <button type="submit">ENviar</button>
         </form>
+
+        <img id='perfil'>
     </div>
 </body>
 
@@ -31,8 +33,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 <script>
 
-    function send(){
-        console.log()
-    }
+   axios.get('/user')
+   .then(res=>{
+       for (let i = 0; i < res.data.length; i++) {
+            const element = res.data[i];
+            document.getElementById('perfi').setAttribute('src',element.image)
+       }
+    
+   })
     
 </script>
