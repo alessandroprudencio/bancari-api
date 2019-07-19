@@ -16,7 +16,7 @@ app.use('/login', authRoute)
 import userRoute from './routes/userRoute'
 app.use('/user', userRoute)
 
-app.use('/file', express.static(path.resolve(__dirname, '.', 'uploads', 'profile')))
+app.use('/file', express.static(path.resolve(__dirname, '.')))
 
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)

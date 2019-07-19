@@ -45,10 +45,8 @@
                             <label for="formGroupExampleInput2">image</label>
                             <input type="file"  class="form-control" name="image"/>
                         </div>
-
             </div>
             <button class="btn btn-primary" type="submit">ENVIAR</button>
-
         </form>
         <img/>
     </div>
@@ -63,11 +61,11 @@
        for (let i = 0; i <= res.data.length; i++) {
             const element = res.data;
             if(element.length > 0){
-            if(element[i] != undefined )document.querySelector('img').setAttribute('src',element[i].image)
-
+            if(element[i] != undefined )document.querySelector('img').setAttribute('src','https://bancari-api.herokuapp.com/file/'+element[i].image)
          }
        }
     
    })
+
     
 </script>
