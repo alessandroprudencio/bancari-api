@@ -9,6 +9,7 @@ import validator from 'validator'
 
 import multer from 'multer'
 import path from 'path'
+import { ESRCH } from 'constants';
 
 const getUser = (req, res) => {
     knex.select('id', 'name', 'email', 'admin').from('users')
@@ -29,7 +30,7 @@ const getUserByIdUser = (req, res) => {
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword, image } = req.body
 
-    // if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
@@ -50,10 +51,18 @@ const createUser = async (req, res) => {
         limits: { fileSize: 5 * (1024 * 1024) },
         fileFilter: (req, file, next) => {
             var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
-            if (allowedMimes.indexOf(file.mimetype)==0) next(null, true)
+            if (allowedMimes.includes(file.mimetype)) next(null, true)
             else return res.status(400).send({ message: "Extensão de foto não permitida!" })
         }
     }).single('image')
+
+    upload(req, res, err => {
+        if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
+        req.body.image = req.file.path
+    })
+
+    
+    return
 
 
 
@@ -85,11 +94,6 @@ const createUser = async (req, res) => {
     //     }
     //   });
     //   return
-
-    // upload(req, res, err => {
-    //     if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-    //     req.body.image = req.file.path
-    // })
 
 
     knex('users').insert(req.body)
