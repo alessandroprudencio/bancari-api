@@ -28,19 +28,6 @@ const getUserByIdUser = (req, res) => {
 }
 
 const createUser = async (req, res) => {
-    const { name, email, password, confirmPassword, image } = req.body
-
-    // if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
-
-    // if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
-
-    // if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
-    // else delete req.body.confirmPassword
-
-    // if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
-    // req.body.password = bcrypt.hashSync(password, 10)
-
-
     const upload = multer({
         storage: multer.diskStorage({
             destination: './uploads/profile',
@@ -57,8 +44,22 @@ const createUser = async (req, res) => {
     }).single('image')
 
     upload(req, res, err => {
+
+        const { name, email, password, confirmPassword, image } = req.body
+
         if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
         req.body.image = req.file.path
+
+        if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+
+        if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
+    
+        if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
+        else delete req.body.confirmPassword
+    
+        if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
+        req.body.password = bcrypt.hashSync(password, 10)
+
         knex('users').insert(req.body)
         .then(() => {
             res.json({ message: "Usuário cadastrado com sucesso!" })
