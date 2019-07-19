@@ -1,13 +1,12 @@
-// const uuidv4 = require('uuid/v4')
 exports.up = async  knex => {
     await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     return knex.schema.createTable('users', table => {
-      table.string('id').unique().notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'));
-      table.string('name').notNullable();
-      table.string('email').unique().notNullable();
-      table.string('password').notNullable();
-      table.string('image').notNullable();
-      table.boolean('admin').defaultTo(false)
+      table.string('id',50).unique().notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'));
+      table.string('name',50).notNullable();
+      table.string('email', 50).unique().notNullable();
+      table.string('password',50).notNullable();
+      table.string('image',50).notNullable();
+      table.boolean('admin',50).defaultTo(false)
       table.timestamp('created_at',{ precision: 6, useTz: true }).defaultTo(knex.fn.now(6));
     })
 };
