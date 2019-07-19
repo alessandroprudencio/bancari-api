@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>API BANCARI</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 
@@ -18,54 +21,74 @@
         <br>
         <h1 class="display-1 font-weight-thin">Welcome to the api Bancari V 1.0 GESTÂO DE CONDOMINIOS</H1>
         <p class="font-weight-medium">By :<i>Alessandro Prudencio</i></p>
-    
-        <form class="" action="user" method="POST" id="form"  enctype="multipart/form-data">
+
+        <form class="" action="user" method="POST" id="form" enctype="multipart/form-data">
 
             <div class="form-group col-12 row">
-                  <div class="form-group col-6">
+                <div class="form-group col-6">
                     <label for="formGroupExampleInput">name</label>
-                     <input type="text" class="form-control"  name="name"/>
-                  </div>
-                  <div class="form-group col-6">
+                    <input type="text" class="form-control" name="name" />
+                </div>
+                <div class="form-group col-6">
                     <label for="formGroupExampleInput2">password</label>
-                    <input type="password" class="form-control" name="password"/>
-                  </div>
+                    <input type="password" class="form-control" name="password" />
+                </div>
 
-                  <div class="form-group col-6">
+                <div class="form-group col-6">
                     <label for="formGroupExampleInput2">confirmPassword</label>
-                    <input type="password" class="form-control" name="confirmPassword" >
-                  </div>
+                    <input type="password" class="form-control" name="confirmPassword">
+                </div>
 
-                  <div class="form-group col-6">
-                        <label for="formGroupExampleInput2">email</label>
-                        <input type="text" class="form-control" name="email"/>
-                    </div>
+                <div class="form-group col-6">
+                    <label for="formGroupExampleInput2">email</label>
+                    <input type="text" class="form-control" name="email" />
+                </div>
 
-                    <div class="form-group col-6">
-                            <label for="formGroupExampleInput2">image</label>
-                            <input type="file"  class="form-control" name="image"/>
-                        </div>
+                <div class="form-group col-6">
+                    <label for="formGroupExampleInput2">image</label>
+                    <input type="file" class="form-control" name="image" />
+                </div>
             </div>
             <button class="btn btn-primary" type="submit">ENVIAR</button>
         </form>
-        <img/>
+        <div id="app">
+            <img v-for="user in users" :src="/file/+user.image" width="150" />
+        </div>
     </div>
 </body>
 
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            image :'',
+            users:[]
+        },
+        methods: {
+            getUser() {
+                axios.get('https://bancari-api.herokuapp.com/user')
+                    .then(res => {
+                        this.users = res.data
+                        console.log(this.users)
+                        // for (let i = 0; i <= res.data.length; i++) {
+                        //     const element = res.data;
+                        //     if (element.length > 0) {
+                        //         if (element[i] != undefined) {
+                        //             imgId.src = 'https://bancari-api.herokuapp.com/file/' + element[i].image
+                        //         }
+                        //     }
+                        // }
+                    })
+        }
+    },
+    mounted(){
+        this.getUser()
+    }
 
-   axios.get('https://bancari-api.herokuapp.com/user')
-   .then(res=>{
-       for (let i = 0; i <= res.data.length; i++) {
-            const element = res.data;
-            if(element.length > 0){
-            if(element[i] != undefined )document.querySelector('img').setAttribute('src','https://bancari-api.herokuapp.com/file/'+element[i].image)
-         }
-       }
-    
-   })
+    })
 
-    
+
 </script>
