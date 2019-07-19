@@ -45,10 +45,10 @@ const createUser = async (req, res) => {
 
     upload(req, res, err => {
 
-        const { name, email, password, confirmPassword, image } = req.body
+        const { name, email, password, confirmPassword } = req.body
 
         if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-        if(req.file)image = req.file.path
+        if(req.file) req.body.image = req.file.path
 
         if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
