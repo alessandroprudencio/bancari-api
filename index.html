@@ -39,7 +39,8 @@
        console.log(res)
        for (let i = 0; i < res.data.length; i++) {
             const element = res.data[i];
-            console.log(element.image)
+            console.log(element)
+            console.log(element[i])
             document.getElementById('perfi').setAttribute('src',element.image)
        }
     
