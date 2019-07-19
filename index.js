@@ -14,15 +14,15 @@ import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
 import userRoute from './routes/userRoute'
-app.use('/user', userRoute)
+app.use('/user',verifyJwt, userRoute)
 
 app.use('/file', express.static(path.resolve(__dirname, '.')))
 
 import residentRoute from './routes/residentRoute'
-app.use('/resident', residentRoute)
+app.use('/resident', verifyJwt, residentRoute)
 
 import reservationRoute  from './routes/reservationRoute'
-app.use('/reservation', reservationRoute)
+app.use('/reservation', verifyJwt, reservationRoute)
 
 app.use('/', (req,res)=>{
     res.sendFile(__dirname + "/index.html")
