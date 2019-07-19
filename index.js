@@ -6,7 +6,7 @@ require("dotenv").load();
 
 import bodyParser from 'body-parser'
 app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 import verifyJwt from './middleware/verifyJwt'
 

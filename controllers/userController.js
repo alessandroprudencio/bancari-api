@@ -53,7 +53,6 @@ const createUser = async (req, res) => {
         if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
         if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
-    
         if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
         else delete req.body.confirmPassword
     
