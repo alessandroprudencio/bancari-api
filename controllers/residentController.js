@@ -25,12 +25,12 @@ const createResident = async (req, res) => {
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
-
     knex('residents').insert(req.body)
         .then(() => {
             res.json({ message: "Morador cadastrado com sucesso!" })
         }).catch(error => {
             if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
+            res.send(error)
         })
 }
 

@@ -2,7 +2,7 @@ const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || '
 
 const getReservation = (req, res) => {
 
-    knex('reservations').join('residents', 'reservations.resident_id','residents.id').select('residents.name','reservations.local', 'reservations.date')
+    knex('reservations').join('residents', 'reservations.resident_id','residents.id').select('residents.name','reservations.place', 'reservations.date')
         .then(data => {
             res.send(data)
         })
@@ -18,16 +18,16 @@ const getByIdReservation = (req, res) => {
 }
 
 const createReservation = async (req, res) => {
-    const { resident_id, local, date } = req.body
+    const { resident_id, place, date } = req.body
 
-    if (!resident_id || !local || !date) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    if (!resident_id || !place || !date) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
-    knex('reservations').insert(req.body)
-        .then(() => {
-            res.json({ message: "Reserva efetuada com sucesso!" })
-        }).catch(error => {
-            if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: error })
-        })
+    try {
+        await knex('reservations').insert(req.body)
+        res.json({ message: "Reserva efetuada com sucesso!" })
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
 }
 
 const updateReservation = (req, res) => {

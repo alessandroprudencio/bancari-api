@@ -9,14 +9,10 @@ import validator from 'validator'
 
 import multer from 'multer'
 import path from 'path'
-import { ESRCH } from 'constants';
 
-const getUser = (req, res) => {
-    knex.select('id', 'name', 'email', 'admin', 'image').from('users')
-        .then(data => {
-            res.send(data)
-        }).catch(err => res.send(err))
-
+const getUser =async (req, res) => {
+    let data = await(knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users'))
+    res.send(data)
 }
 
 const getUserByIdUser = (req, res) => {
@@ -63,7 +59,7 @@ const createUser = async (req, res) => {
         .then(() => {
             res.json({ message: "Usuário cadastrado com sucesso!" })
         }).catch(error => {
-            if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
+            console.log(error)
         })
     })
 
