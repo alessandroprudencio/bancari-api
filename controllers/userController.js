@@ -29,7 +29,7 @@ const getUserByIdUser = (req, res) => {
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword, image } = req.body
 
-    if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    // if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
