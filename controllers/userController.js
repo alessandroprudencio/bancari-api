@@ -87,7 +87,6 @@ const createUser = async (req, res) => {
     //     `
     // };
 
-
     // await transporter.sendMail(mailOptions,(error, info)=>{
     //     if (error) {
     //       res.send(error)
@@ -96,7 +95,6 @@ const createUser = async (req, res) => {
     //     }
     //   });
     //   return
-
 
  
 }

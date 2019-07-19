@@ -1,6 +1,6 @@
 import express from 'express'
+import path from 'path'
 const app = express()
-const path = require('path')
 
 require("dotenv").load();
 
@@ -22,7 +22,6 @@ import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
 
 import reservationRoute  from './routes/reservationRoute'
-import { dirname } from 'path';
 app.use('/reservation', verifyJwt, reservationRoute)
 
 app.use('/', (req,res)=>{

@@ -25,8 +25,7 @@
             <input type="text" name="email"/>
             <button type="submit">ENviar</button>
         </form>
-
-        <img id='perfil'>
+        <img/>
     </div>
 </body>
 
@@ -36,12 +35,10 @@
 
    axios.get('https://bancari-api.herokuapp.com/user')
    .then(res=>{
-       console.log(res)
-       for (let i = 0; i < res.data.length; i++) {
-            const element = res.data[i];
-            console.log(element)
-            console.log(element[i])
-            document.getElementById('perfi').setAttribute('src',element.image)
+       for (let i = 0; i <= res.data.length; i++) {
+            const element = res.data;
+            console.log(Object.keys(element[i].image).length === 0)
+            if(element[i].image != {} || element[i].image != '' || element[i].image != null )document.querySelector('img').setAttribute('src',element[i].image)
        }
     
    })
