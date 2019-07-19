@@ -34,10 +34,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 <script>
 
-   axios.get('/user')
+   axios.get('https://bancari-api.herokuapp.com/')
    .then(res=>{
+       console.log(res)
        for (let i = 0; i < res.data.length; i++) {
             const element = res.data[i];
+            console.log(element.image)
             document.getElementById('perfi').setAttribute('src',element.image)
        }
     
