@@ -34,7 +34,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 <script>
 
-   axios.get('https://bancari-api.herokuapp.com/')
+   axios.get('https://bancari-api.herokuapp.com/user')
    .then(res=>{
        console.log(res)
        for (let i = 0; i < res.data.length; i++) {
