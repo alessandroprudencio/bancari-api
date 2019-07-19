@@ -37,8 +37,10 @@
    .then(res=>{
        for (let i = 0; i <= res.data.length; i++) {
             const element = res.data;
-            console.log(Object.keys(element[i].image).length === 0)
-            if(element[i].image != {} || element[i].image != '' || element[i].image != null )document.querySelector('img').setAttribute('src',element[i].image)
+         if(element.length > 0){
+            if(element[i].image != undefined )document.querySelector('img').setAttribute('src',element[i].image)
+
+         }
        }
     
    })
