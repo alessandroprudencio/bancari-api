@@ -26,7 +26,6 @@ const getUserByIdUser = (req, res) => {
 
 }
 
-
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword, image } = req.body
 
@@ -41,20 +40,20 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
 
 
-    // const upload = multer({
-    //     storage: multer.diskStorage({
-    //         destination: './uploads/profile',
-    //         filename: (req, file, next) => {
-    //             next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
-    //         }
-    //     }),
-    //     limits: { fileSize: 5 * (1024 * 1024) },
-    //     fileFilter: (req, file, next) => {
-    //         var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
-    //         if (allowedMimes.indexOf(file.mimetype)==0) next(null, true)
-    //         else return res.status(400).send({ message: "Extensão de foto não permitida!" })
-    //     }
-    // }).single('image')
+    const upload = multer({
+        storage: multer.diskStorage({
+            destination: './uploads/profile',
+            filename: (req, file, next) => {
+                next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
+            }
+        }),
+        limits: { fileSize: 5 * (1024 * 1024) },
+        fileFilter: (req, file, next) => {
+            var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+            if (allowedMimes.indexOf(file.mimetype)==0) next(null, true)
+            else return res.status(400).send({ message: "Extensão de foto não permitida!" })
+        }
+    }).single('image')
 
 
 
