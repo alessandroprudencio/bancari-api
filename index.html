@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>API BANCARI</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
@@ -16,14 +18,37 @@
         <br>
         <h1 class="display-1 font-weight-thin">Welcome to the api Bancari V 1.0 GESTÂO DE CONDOMINIOS</H1>
         <p class="font-weight-medium">By :<i>Alessandro Prudencio</i></p>
+    
+        <form class="" action="user" method="POST" id="form"  enctype="multipart/form-data">
 
-        <form action="user" method="POST" id="form"  enctype="multipart/form-data">
-            <input type="text" name="name"/>
-            <input type="password" name="password"/>
-            <input type="password" name="confirmPassword" >
-            <input type="file" name="image"/>
-            <input type="text" name="email"/>
-            <button type="submit">ENviar</button>
+            <div class="form-group col-12 row">
+                  <div class="form-group col-6">
+                    <label for="formGroupExampleInput">name</label>
+                     <input type="text" class="form-control"  name="name"/>
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="formGroupExampleInput2">password</label>
+                    <input type="password" class="form-control" name="password"/>
+                  </div>
+
+                  <div class="form-group col-6">
+                    <label for="formGroupExampleInput2">confirmPassword</label>
+                    <input type="password" class="form-control" name="confirmPassword" >
+                  </div>
+
+                  <div class="form-group col-6">
+                        <label for="formGroupExampleInput2">email</label>
+                        <input type="text" class="form-control" name="email"/>
+                    </div>
+
+                    <div class="form-group col-6">
+                            <label for="formGroupExampleInput2">image</label>
+                            <input type="file"  class="form-control" name="image"/>
+                        </div>
+
+            </div>
+            <button class="btn btn-primary" type="submit">ENVIAR</button>
+
         </form>
         <img/>
     </div>
