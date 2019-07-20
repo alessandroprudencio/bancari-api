@@ -1,5 +1,3 @@
-import validator from 'validator'
-
 const getResident = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents'))

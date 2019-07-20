@@ -1,9 +1,4 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import upload from '../middleware/uploadFile'
-import validator from 'validator'
-
-// import nodemailer from 'nodemailer'
 
 const getUser = async (req, res) => {
     try {
