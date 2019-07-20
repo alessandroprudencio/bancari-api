@@ -28,7 +28,7 @@ const createUser = async (req, res) => {
 
     if (password.length <= 6) return sendStatus(400).send({ message: 'Senha muito curta..' })
     
-    if (req.files.image) req.body.image = await upload(req,res)
+    if (req.body.image && req.files.image) req.body.image = await upload(req,res)
        
     req.body.password = bcrypt.hashSync(password, 10)
 
