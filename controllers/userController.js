@@ -4,7 +4,7 @@ const getUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users'))
     } catch (error) {
-        status(500).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -12,31 +12,29 @@ const getUserByIdUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users').where({ id: req.params.id }))
     } catch (error) {
-        status(500).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
 
+    if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
-    if (!name || !email || !password || !confirmPassword) return status(400).send({ message: 'Por favor preencha todos os campos' })
-
-    if (!validator.isEmail(email)) return status(400).send({ message: 'E-mail inválido' })
-    if (password != confirmPassword) return status(400).send({ message: 'Senhas não coencidem!' })
+    if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
+    if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
     else delete req.body.confirmPassword
 
-    if (password.length <= 6) return status(400).send({ message: 'Senha muito curta..' })
-    
-    if (req.body.image && Object.keys(req.files).length != 0) req.body.image = await upload(req,res)
-       
+    if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
+
+    if (Object.keys(req.files).length != 0) req.body.image = await upload(req,res)
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
         await knex('users').insert(req.body)
         res.json({ message: "Usuário cadastrado com sucesso!" })
     } catch (error) {
-        status(500).send({ message: error })
+        res.status(500).send({ message: error })
     }
 
 
@@ -80,7 +78,7 @@ const updateUser = async (req, res) => {
         await knex('users').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
     } catch (error) {
-        status(500).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -88,13 +86,13 @@ const deleteUser = async (req, res) => {
 
     try {
         let user = await knex.select('id').from('users').where({ id: req.params.id })
-        if (!user.length) status(404).send({ message: "Usuário não encontrado" })
+        if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
         let token = req.headers.authorization.split(" ")[1]
-        if (jwt.decode(token).admin === false) return status(401).send({ message: "Usuário não tem permissões para exclusão" })
+        if (jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
         await knex('user').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
     } catch (error) {
-        status(500).send({ message: error })
+        res.status(500).send({ message: error })
     }
 
 
