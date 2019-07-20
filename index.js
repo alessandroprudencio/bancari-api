@@ -24,27 +24,23 @@ import verifyJwt from './middleware/verifyJwt'
 import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
+import userRoute from './routes/userRoute'
+app.use('/user',verifyJwt, userRoute)
+
+app.use('/',verifyJwt, express.static(path.resolve(__dirname, '.')))
+
+import residentRoute from './routes/residentRoute'
+app.use('/resident', verifyJwt, residentRoute)
+
+import reservationRoute from './routes/reservationRoute'
+app.use('/reservation', verifyJwt, reservationRoute)
+
+import realtyRoute from './routes/realtyRoute'
+app.use('/realty', verifyJwt, realtyRoute)
+
 app.use('/', (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
-
-app.use('*', verifyJwt)
-
-import userRoute from './routes/userRoute'
-app.use('/user', userRoute)
-
-app.use('/', express.static(path.resolve(__dirname, '.')))
-
-import residentRoute from './routes/residentRoute'
-app.use('/resident', residentRoute)
-
-import reservationRoute from './routes/reservationRoute'
-app.use('/reservation', reservationRoute)
-
-import realtyRoute from './routes/realtyRoute'
-app.use('/realty', realtyRoute)
-
-
 
 app.listen(process.env.PORT, () => { console.log('Servidor iniciado ' + process.env.PORT) })
 
