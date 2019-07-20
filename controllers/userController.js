@@ -8,7 +8,7 @@ import validator from 'validator'
 
 const getUser = async (req, res) => {
     try {
-        res.send(await knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users'))
+        res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users'))
     } catch (error) {
         res.status(500).send({ message: error })
     }
@@ -16,7 +16,7 @@ const getUser = async (req, res) => {
 
 const getUserByIdUser = async (req, res) => {
     try {
-        res.send(await knex.select('id', 'name', 'email', 'admin').from('users').where({ id: req.params.id }))
+        res.send(await knex.select('id', 'name', 'email', 'admin','image').from('users').where({ id: req.params.id }))
     } catch (error) {
         res.status(500).send({ message: error })
     }
@@ -99,7 +99,7 @@ const deleteUser = async (req, res) => {
         let user = await knex.select('id').from('users').where({ id: req.params.id })
         if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
         let token = req.headers.authorization.split(" ")[1]
-        if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
+        if (jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
         await knex('user').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
     } catch (error) {
