@@ -1,5 +1,3 @@
-module.exports = {
-
   // development: {
   //   client: 'mysql',
   //   connection: {
@@ -13,7 +11,7 @@ module.exports = {
   //   },
   // },
 
-development: {
+const development = {
     client: 'pg',
     connection: {
       host: '127.0.0.1',
@@ -24,7 +22,7 @@ development: {
     migrations: {
       directory: __dirname + '/migrations',
     },
-  },
+  }
   
 
   // production: {
@@ -40,7 +38,7 @@ development: {
   //   },
   // }
 
-  production:{
+  const production = {
     client: 'pg',
     connection: {
       host: 'ec2-174-129-29-101.compute-1.amazonaws.com',
@@ -52,4 +50,7 @@ development: {
           directory: __dirname + '/migrations',
       }
     }
-};
+  
+
+// const environment = process.env.ENVIRONMENT || 'development'
+export {production, development}
