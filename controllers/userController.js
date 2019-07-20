@@ -10,17 +10,20 @@ import validator from 'validator'
 import multer from 'multer'
 import path from 'path'
 
-const getUser =async (req, res) => {
-    let data = await(knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users'))
-    res.send(data)
+const getUser = async (req, res) => {
+    try {
+        res.send(await (knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users')))
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
 }
 
-const getUserByIdUser = (req, res) => {
-    knex.select('id', 'name', 'email', 'admin').from('users').where({id:req.params.id})
-        .then(data => {
-            res.send(data)
-        }).catch(err => res.send(err))
-
+const getUserByIdUser = async (req, res) => {
+    try {
+        res.send(await knex.select('id', 'name', 'email', 'admin').from('users').where({ id: req.params.id }))
+    } catch (error) {
+        res.status(400).send({ message: error.detail })
+    }
 }
 
 const createUser = async (req, res) => {
@@ -44,23 +47,23 @@ const createUser = async (req, res) => {
         const { name, email, password, confirmPassword } = req.body
 
         if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-        if(req.file) req.body.image = req.file.path
+        if (req.file) req.body.image = req.file.path
 
         if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
         if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
         if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
         else delete req.body.confirmPassword
-    
+
         if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
         req.body.password = bcrypt.hashSync(password, 10)
 
         knex('users').insert(req.body)
-        .then(() => {
-            res.json({ message: "Usuário cadastrado com sucesso!" })
-        }).catch(error => {
-            console.log(error)
-        })
+            .then(() => {
+                res.json({ message: "Usuário cadastrado com sucesso!" })
+            }).catch(error => {
+                console.log(error)
+            })
     })
 
 
@@ -92,35 +95,37 @@ const createUser = async (req, res) => {
     //   });
     //   return
 
- 
+
 }
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
     const { password } = req.body
 
-    if (req.body.password) req.body.password = bcrypt.hashSync(password, 10)
+    if (password) req.body.password = bcrypt.hashSync(password, 10)
 
-    knex('users').update(req.body)
-        .then(() => res.send({ message: "Atualizado com sucesso!" }))
-        .catch(err => res.status(400).send({ message: err.sqlMessage }))
+    try {
+        await knex('users').update(req.body)
+        res.send({ message: "Atualizado com sucesso!" })
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
 }
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
 
-    knex.select('id').from('users').where({ id: req.params.id })
-        .then(user => {
-            if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
+    try {
+        let user = await knex.select('id').from('users').where({ id: req.params.id })
+        if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
+        let token = req.headers.authorization.split(" ")[1]
+        if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
+        await knex('user').where({ id: req.params.id }).delete()
+        res.send({ message: "Excluido com sucesso!" })
+    } catch (error) {
+        res.status(400).send({ message: err.error })
 
-            let token = req.headers.authorization.split(" ")[1]
-            if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
-
-            knex('user ').where({ id: req.params.id }).delete()
-                .then(() => res.send({ message: "Excluido com sucesso!" }))
-                .catch(err => res.status(400).send({ message: err.sqlMessage }))
-
-        }).catch(err => res.status(400).send(err))
+    }
 
 
 }
 
-export { getUser, getUserByIdUser,  createUser, updateUser, deleteUser }
+export { getUser, getUserByIdUser, createUser, updateUser, deleteUser }

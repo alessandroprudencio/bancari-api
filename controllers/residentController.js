@@ -2,20 +2,20 @@ const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || '
 
 import validator from 'validator'
 
-const getResident = (req, res) => {
-    knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents')
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => res.send(err))
+const getResident = async (req, res) => {
+    try {
+        res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents'))
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
 }
 
-const getByIdResident = (req, res) => {
-    knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents').where({ id: req.params.id })
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => res.send(err))
+const getByIdResident = async (req, res) => {
+    try {
+        res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents').where({ id: req.params.id }))
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
 }
 
 const createResident = async (req, res) => {
@@ -25,13 +25,15 @@ const createResident = async (req, res) => {
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
-    knex('residents').insert(req.body)
-        .then(() => {
-            res.json({ message: "Morador cadastrado com sucesso!" })
-        }).catch(error => {
-            if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
-            res.send(error)
-        })
+    try {
+        await (knex('residents').insert(req.body))
+        res.json({ message: "Morador cadastrado com sucesso!" })
+    } catch (error) {
+        if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
+        res.status(400).send({ message: error })
+    }
+
+      
 }
 
 const updateResident = (req, res) => {
