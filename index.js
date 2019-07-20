@@ -14,7 +14,7 @@ import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
 import userRoute from './routes/userRoute'
-app.use('/user',verifyJwt, userRoute)
+app.use('/user', userRoute)
 
 app.use('/file', express.static(path.resolve(__dirname, '.')))
 

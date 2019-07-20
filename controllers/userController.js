@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
-
+import upload from '../middleware/uploadFile'
 import validator from 'validator'
 
 // import nodemailer from 'nodemailer'
@@ -27,21 +27,7 @@ const getUserByIdUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-    const upload = multer({
-        storage: multer.diskStorage({
-            destination: './uploads/profile',
-            filename: (req, file, next) => {
-                next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
-            }
-        }),
-        limits: { fileSize: 5 * (1024 * 1024) },
-        fileFilter: (req, file, next) => {
-            var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
-            if (allowedMimes.includes(file.mimetype)) next(null, true)
-            else return res.status(400).send({ message: "Extensão de foto não permitida!" })
-        }
-    }).single('image')
-
+   
     upload(req, res, err => {
 
         const { name, email, password, confirmPassword } = req.body
