@@ -25,7 +25,7 @@ const getUserByIdUser = async (req, res) => {
 
 const createUser = async (req, res) => {
 
-    upload(req, res, err => {
+   await upload(req, res, err => {
 
         const { name, email, password, confirmPassword } = req.body
 
