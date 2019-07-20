@@ -1,4 +1,4 @@
-import { getRealty, getByIdRealty, createRealty, updateRealty, deleteRealty } from '../controllers/RealtyController'
+import { getRealty, getByIdRealty, createRealty, updateRealty, deleteRealty } from '../controllers/realtyController'
 
 const router = require('express').Router()
 
