@@ -1,19 +1,13 @@
-import multer from 'multer'
-import path from 'path'
-
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: './uploads/profile',
-        filename: (req, file, next) => {
-            next(null, file.fieldname + '_' + Date.now() + (path.extname(file.originalname)))
-        }
-    }),
-    limits: { fileSize: 5 * (1024 * 1024) },
-    fileFilter: (req, file, next) => {
-        var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
-        if (allowedMimes.includes(file.mimetype)) next(null, true)
-        else return res.status(400).send({ message: "Extensão de foto não permitida!" })
+const upload =async (req,res)=>{
+    const { name, size, mimetype, md5 } = req.files.image
+    var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+    if (!allowedMimes.includes(mimetype)) return res.status(400).send({ message: "Extensão de foto não permitida!" })
+    if(size > 5 * (1024 * 1024))return res.status(400).send('Tamanho de imagem não permitido')
+    try {
+        await req.files.image.mv(__dirname + '../../uploads/profile/' + md5 + (path.extname(name)))
+    }catch(err){
+        console.log(err)
+        res.status(500).send(err)    
     }
-}).single('image')
-
+}
 export default upload

@@ -17,30 +17,29 @@ const getUserByIdUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
+    const { name, email, password, confirmPassword } = req.body
 
-    upload(req, res, err => {
+    if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
+    if (req.file) req.body.image = req.file.path
 
-        const { name, email, password, confirmPassword } = req.body
+    if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
-        if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-        if (req.file) req.body.image = req.file.path
+    if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
+    if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
+    else delete req.body.confirmPassword
 
-        if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
+    
+    await upload(req,res)
+       
+    req.body.password = bcrypt.hashSync(password, 10)
 
-        if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
-        if (password != confirmPassword) return res.status(400).send({ message: 'Senhas não coencidem!' })
-        else delete req.body.confirmPassword
-
-        if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
-        req.body.password = bcrypt.hashSync(password, 10)
-
-        knex('users').insert(req.body)
-            .then(() => {
-                res.json({ message: "Usuário cadastrado com sucesso!" })
-            }).catch(error => {
-                res.status(500).send({ message: error })
-            })
-    })
+    try {
+        await knex('users').insert(req.body)
+        res.json({ message: "Usuário cadastrado com sucesso!" })
+    } catch (error) {
+        res.status(500).send({ message: error })
+    }
 
 
     // const transporter = await nodemailer.createTransport({
