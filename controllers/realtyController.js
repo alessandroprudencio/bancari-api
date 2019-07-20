@@ -1,6 +1,6 @@
 const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
 
-const getrealty = async (req, res) => {
+const getRealty = async (req, res) => {
     try {
         res.send(await knex('realtys').join('residents', 'realtys.resident_id', 'residents.id').select('residents.name', 'realtys.place', 'realtys.date'))
     } catch (error) {
@@ -9,7 +9,7 @@ const getrealty = async (req, res) => {
 
 }
 
-const getByIdrealty = async (req, res) => {
+const getByIdRealty = async (req, res) => {
     try {
         res.send(await knex.select('*').from('realtys').where({ id: req.params.id }))
     } catch (error) {
@@ -17,7 +17,7 @@ const getByIdrealty = async (req, res) => {
     }
 }
 
-const createrealty = async (req, res) => {
+const createRealty = async (req, res) => {
     const { resident_id, place, date } = req.body
 
     if (!resident_id || !place || !date) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
@@ -30,7 +30,7 @@ const createrealty = async (req, res) => {
     }
 }
 
-const updaterealty = async (req, res) => {
+const updateRealty = async (req, res) => {
 
     try {
         await knex('realtys').update(req.body)
@@ -40,7 +40,7 @@ const updaterealty = async (req, res) => {
     }
 }
 
-const deleterealty = async (req, res) => {
+const deleteRealty = async (req, res) => {
     try {
         let resident = await knex.select('id').from('realtys').where({ id: req.params.id })
         if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
@@ -54,4 +54,4 @@ const deleterealty = async (req, res) => {
     }
 }
 
-export { getrealty, getByIdrealty, createrealty, updaterealty, deleterealty }
+export { getRealty, getByIdRealty, createRealty, updateRealty, deleteRealty }
