@@ -2,7 +2,7 @@ const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || '
 
 const getRealty = async (req, res) => {
     try {
-        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address', 'realtys.number_address'))
+        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address','realtys.id', 'realtys.number_address'))
     } catch (error) {
         res.status(500).send({ message: error })
     }
