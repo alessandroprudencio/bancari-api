@@ -7,9 +7,6 @@ import validator from 'validator'
 
 // import nodemailer from 'nodemailer'
 
-import multer from 'multer'
-import path from 'path'
-
 const getUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users'))
