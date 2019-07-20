@@ -12,9 +12,9 @@ import path from 'path'
 
 const getUser = async (req, res) => {
     try {
-        res.send(await (knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users')))
+        res.send(await knex.select('id', 'name', 'email', 'admin', 'image', 'created_at').from('users'))
     } catch (error) {
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -22,7 +22,7 @@ const getUserByIdUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin').from('users').where({ id: req.params.id }))
     } catch (error) {
-        res.status(400).send({ message: error.detail })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -107,7 +107,7 @@ const updateUser = async (req, res) => {
         await knex('users').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
     } catch (error) {
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -121,8 +121,7 @@ const deleteUser = async (req, res) => {
         await knex('user').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
     } catch (error) {
-        res.status(400).send({ message: err.error })
-
+        res.status(500).send({ message: error })
     }
 
 

@@ -6,7 +6,7 @@ const getResident = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents'))
     } catch (error) {
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -14,7 +14,7 @@ const getByIdResident = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents').where({ id: req.params.id }))
     } catch (error) {
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
@@ -30,33 +30,36 @@ const createResident = async (req, res) => {
         res.json({ message: "Morador cadastrado com sucesso!" })
     } catch (error) {
         if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
+    }
+}
+
+const updateResident = async (req, res) => {
+
+    try {
+        await knex('residents').update(req.body)
+        res.send({ message: "Atualizado com sucesso!" })
+    } catch (error) {
+        res.status(500).send({ message: error })
     }
 
-      
 }
 
-const updateResident = (req, res) => {
+const deleteResident = async (req, res) => {
 
-    knex('residents').update(req.body)
-        .then(() => res.send({ message: "Atualizado com sucesso!" }))
-        .catch(err => res.send({ message: err.sqlMessage }))
-}
+    try {
+        let resident = await knex.select('id').from('residents').where({ id: req.params.id })
+        if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
 
-const deleteResident = (req, res) => {
+        let token = req.headers.authorization.split(" ")[1]
+        if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
 
-    knex.select('id').from('residents').where({ id: req.params.id })
-        .then(resident => {
-            if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
+        await knex('residents').where({ id: req.params.id }).delete()
+        res.send({ message: "Excluido com sucesso!" })
+    } catch (error) {
+        res.status(500).send({ message: error })
+    }
 
-            let token = req.headers.authorization.split(" ")[1]
-            if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
-
-            knex('residents').where({ id: req.params.id }).delete()
-                .then(() => res.send({ message: "Excluido com sucesso!" }))
-                .catch(err => res.status(400).send({ message: err.sqlMessage }))
-
-        }).catch(err => res.status(400).send(err))
 
 
 }

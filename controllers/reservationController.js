@@ -1,20 +1,20 @@
 const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
 
-const getReservation = (req, res) => {
+const getReservation = async (req, res) => {
+    try {
+        res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date'))
+    } catch (error) {
+        res.status(500).send({ message: error })
+    }
 
-    knex('reservations').join('residents', 'reservations.resident_id','residents.id').select('residents.name','reservations.place', 'reservations.date')
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => res.send(err))
 }
 
-const getByIdReservation = (req, res) => {
-    knex.select('*').from('reservations').where({ id: req.params.id })
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => res.send(err))
+const getByIdReservation = async (req, res) => {
+    try {
+        res.send(await knex.select('*').from('reservations').where({ id: req.params.id }))
+    } catch (error) {
+        res.status(500).send({ message: error })
+    }
 }
 
 const createReservation = async (req, res) => {
@@ -26,33 +26,32 @@ const createReservation = async (req, res) => {
         await knex('reservations').insert(req.body)
         res.json({ message: "Reserva efetuada com sucesso!" })
     } catch (error) {
-        res.status(400).send({ message: error })
+        res.status(500).send({ message: error })
     }
 }
 
-const updateReservation = (req, res) => {
+const updateReservation = async (req, res) => {
 
-    knex('reservations').update(req.body)
-        .then(() => res.send({ message: "Atualizado com sucesso!" }))
-        .catch(err => res.send({ message: err.sqlMessage }))
+    try {
+        await knex('reservations').update(req.body)
+        res.send({ message: "Atualizado com sucesso!" })
+    } catch (error) {
+        res.status(500).send({ message: error })
+    }
 }
 
-const deleteReservation = (req, res) => {
-
-    knex.select('id').from('reservations').where({ id: req.params.id })
-        .then(resident => {
+const deleteReservation = async (req, res) => {
+          try {
+            let resident = await knex.select('id').from('reservations').where({ id: req.params.id })
             if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
-
             let token = req.headers.authorization.split(" ")[1]
             if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
 
-            knex('reservations').where({ id: req.params.id }).delete()
-                .then(() => res.send({ message: "Excluido com sucesso!" }))
-                .catch(err => res.status(400).send({ message: err.sqlMessage }))
-
-        }).catch(err => res.status(400).send(err))
-
-
+            await knex('reservations').where({ id: req.params.id }).delete()
+            res.send({ message: "Excluido com sucesso!" })
+          } catch (error) {
+            res.status(500).send({ message: error })
+          }
 }
 
 export { getReservation, getByIdReservation, createReservation, updateReservation, deleteReservation }
