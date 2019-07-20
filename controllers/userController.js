@@ -24,8 +24,8 @@ const getUserByIdUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-
-    upload (req, res, err => {
+   
+    upload(req, res, err => {
 
         const { name, email, password, confirmPassword } = req.body
 
@@ -41,13 +41,12 @@ const createUser = async (req, res) => {
         if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
         req.body.password = bcrypt.hashSync(password, 10)
 
-        try {
-            knex('users').insert(req.body)
-            res.json({ message: "Usuário cadastrado com sucesso!" })
-        } catch (error) {
-            res.status(500).send(error)
-        }
-
+         knex('users').insert(req.body)
+            .then(() => {
+                res.json({ message: "Usuário cadastrado com sucesso!" })
+            }).catch(error => {
+                console.log(error)
+            })
     })
 
 
