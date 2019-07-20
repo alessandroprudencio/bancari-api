@@ -7,7 +7,7 @@ import validator from 'validator'
 import nodemailer from 'nodemailer'
 import upload from 'express-fileupload'
 
-global.knex = require('knex')(require('./db/knexfile')['development'])
+global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
 global.bcrypt = bcrypt
 global.jwt = jwt
 global.validator = validator
