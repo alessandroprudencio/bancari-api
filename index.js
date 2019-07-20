@@ -7,7 +7,7 @@ import validator from 'validator'
 import nodemailer from 'nodemailer'
 import upload from 'express-fileupload'
 
-global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
+global.knex = require('knex')(require('./db/knexfile')['development'])
 global.bcrypt = bcrypt
 global.jwt = jwt
 global.validator = validator
@@ -39,11 +39,12 @@ app.use('/reservation', verifyJwt, reservationRoute)
 import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
+// app.use('/',verifyJwt, express.static(path.resolve(__dirname, '.')))
+
 app.use('/', (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
 
-app.use('/',verifyJwt, express.static(path.resolve(__dirname, '.')))
 
 
 app.listen(process.env.PORT, () => { console.log('Servidor iniciado ' + process.env.PORT) })

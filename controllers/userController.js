@@ -27,14 +27,14 @@ const createUser = async (req, res) => {
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
 
-    if (Object.keys(req.files).length != 0) req.body.image = await upload(req,res)
-
+    if (req.body.image && Object.keys(req.files).length != 0)req.body.image = await upload(req, res)
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
         await knex('users').insert(req.body)
         res.json({ message: "Usuário cadastrado com sucesso!" })
     } catch (error) {
+        if(error.code =='23505')return res.status(400).send({message:`O e-mail ${req.body.email} já esta em uso !`})
         res.status(500).send({ message: error })
     }
 
