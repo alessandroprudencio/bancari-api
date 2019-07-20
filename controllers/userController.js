@@ -45,7 +45,7 @@ const createUser = async (req, res) => {
             .then(() => {
                 res.json({ message: "Usuário cadastrado com sucesso!" })
             }).catch(error => {
-                console.log(error)
+                res.status(500).send({message:error})
             })
     })
 
