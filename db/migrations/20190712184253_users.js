@@ -5,7 +5,7 @@ exports.up = async  knex => {
       table.string('name',50).notNullable()
       table.string('email', 50).unique().notNullable()
       table.string('password',50).notNullable()
-      table.string('image',50)
+      table.string('image')
       table.boolean('admin').defaultTo(false)
       table.timestamp('created_at',{ precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
     })
