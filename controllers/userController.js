@@ -19,8 +19,6 @@ const getUserByIdUser = async (req, res) => {
 const createUser = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
 
-    if (err) return res.status(400).send({ message: err.message + ' : ' + err.field })
-    if (req.file) req.body.image = req.file.path
 
     if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
@@ -30,7 +28,7 @@ const createUser = async (req, res) => {
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
     
-    await upload(req,res)
+    if (req.files.image) req.body.image = await upload(req,res)
        
     req.body.password = bcrypt.hashSync(password, 10)
 
