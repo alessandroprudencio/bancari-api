@@ -7,7 +7,7 @@ exports.up = async knex => {
         table.string('image',50)
         table.text('address').notNullable()
         table.string('phone',50).notNullable()
-        table.integer('number_address',50).notNullable()
+        table.integer('number_address').notNullable()
         table.timestamp('created_at',{ precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
     })
 }
