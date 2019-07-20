@@ -8,8 +8,7 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-const knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
-global.knex = knex
+global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
 
 import verifyJwt from './middleware/verifyJwt'
 
