@@ -21,7 +21,7 @@ const createResident = async (req, res) => {
 
     if (!name || !email || !address || !phone || !number_address) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
-    if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
+    if (email && !validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
     try {
         await (knex('residents').insert(req.body))
