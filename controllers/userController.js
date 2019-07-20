@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
 import upload from '../middleware/uploadFile'
 import validator from 'validator'
 
@@ -16,14 +15,14 @@ const getUser = async (req, res) => {
 
 const getUserByIdUser = async (req, res) => {
     try {
-        res.send(await knex.select('id', 'name', 'email', 'admin','image').from('users').where({ id: req.params.id }))
+        res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users').where({ id: req.params.id }))
     } catch (error) {
         res.status(500).send({ message: error })
     }
 }
 
 const createUser = async (req, res) => {
-   
+
     upload(req, res, err => {
 
         const { name, email, password, confirmPassword } = req.body
@@ -40,11 +39,11 @@ const createUser = async (req, res) => {
         if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
         req.body.password = bcrypt.hashSync(password, 10)
 
-         knex('users').insert(req.body)
+        knex('users').insert(req.body)
             .then(() => {
                 res.json({ message: "Usuário cadastrado com sucesso!" })
             }).catch(error => {
-                res.status(500).send({message:error})
+                res.status(500).send({ message: error })
             })
     })
 

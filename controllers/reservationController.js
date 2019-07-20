@@ -1,5 +1,3 @@
-const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
-
 const getReservation = async (req, res) => {
     try {
         res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date'))

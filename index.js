@@ -5,8 +5,11 @@ require("dotenv").load();
 
 const app = express()
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
+
+const knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
+global.knex = knex
 
 import verifyJwt from './middleware/verifyJwt'
 
@@ -14,23 +17,23 @@ import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
 import userRoute from './routes/userRoute'
-app.use('/user',verifyJwt, userRoute)
+app.use('/user', userRoute)
 
-app.use('/file',verifyJwt, express.static(path.resolve(__dirname, '.')))
+app.use('/file', verifyJwt, express.static(path.resolve(__dirname, '.')))
 
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
 
-import reservationRoute  from './routes/reservationRoute'
+import reservationRoute from './routes/reservationRoute'
 app.use('/reservation', verifyJwt, reservationRoute)
 
-import realtyRoute  from './routes/realtyRoute'
+import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
-app.use('/', (req,res)=>{
+app.use('/', (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
 
-app.listen(process.env.PORT, () => {console.log('Servidor iniciado ' + process.env.PORT)})
+app.listen(process.env.PORT, () => { console.log('Servidor iniciado ' + process.env.PORT) })
 
 
