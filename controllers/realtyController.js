@@ -1,57 +1,57 @@
 const knex = require('knex')(require('../db/knexfile')[process.env.NODE_ENV || 'development'])
 
-const getReservation = async (req, res) => {
+const getrealty = async (req, res) => {
     try {
-        res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date'))
+        res.send(await knex('realtys').join('residents', 'realtys.resident_id', 'residents.id').select('residents.name', 'realtys.place', 'realtys.date'))
     } catch (error) {
         res.status(500).send({ message: error })
     }
 
 }
 
-const getByIdReservation = async (req, res) => {
+const getByIdrealty = async (req, res) => {
     try {
-        res.send(await knex.select('*').from('reservations').where({ id: req.params.id }))
+        res.send(await knex.select('*').from('realtys').where({ id: req.params.id }))
     } catch (error) {
         res.status(500).send({ message: error })
     }
 }
 
-const createReservation = async (req, res) => {
+const createrealty = async (req, res) => {
     const { resident_id, place, date } = req.body
 
     if (!resident_id || !place || !date) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
     try {
-        await knex('reservations').insert(req.body)
+        await knex('realtys').insert(req.body)
         res.json({ message: "Reserva efetuada com sucesso!" })
     } catch (error) {
         res.status(500).send({ message: error })
     }
 }
 
-const updateReservation = async (req, res) => {
+const updaterealty = async (req, res) => {
 
     try {
-        await knex('reservations').update(req.body)
+        await knex('realtys').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
     } catch (error) {
         res.status(500).send({ message: error })
     }
 }
 
-const deleteReservation = async (req, res) => {
+const deleterealty = async (req, res) => {
     try {
-        let resident = await knex.select('id').from('reservations').where({ id: req.params.id })
+        let resident = await knex.select('id').from('realtys').where({ id: req.params.id })
         if (!resident.length) return res.status(404).send({ message: "Usuário não encontrado" })
         let token = req.headers.authorization.split(" ")[1]
         if (jwt.decode(token).admin === 0) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
 
-        await knex('reservations').where({ id: req.params.id }).delete()
+        await knex('realtys').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
     } catch (error) {
         res.status(500).send({ message: error })
     }
 }
 
-export { getReservation, getByIdReservation, createReservation, updateReservation, deleteReservation }
+export { getrealty, getByIdrealty, createrealty, updaterealty, deleterealty }
