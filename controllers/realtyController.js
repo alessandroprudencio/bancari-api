@@ -18,9 +18,9 @@ const getByIdRealty = async (req, res) => {
 }
 
 const createRealty = async (req, res) => {
-    const { resident_id, place, date } = req.body
+    const { owner_id, address, number_address } = req.body
 
-    if (!resident_id || !place || !date) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
+    if (!address || !number_address) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
 
     try {
         await knex('realtys').insert(req.body)
