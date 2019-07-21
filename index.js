@@ -39,7 +39,7 @@ app.use('/reservation', verifyJwt, reservationRoute)
 import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
-// app.use('/',verifyJwt, express.static(path.resolve(__dirname, '.')))
+app.use('/uploads',verifyJwt, express.static(path.resolve(__dirname, '.')))
 
 app.use('/', (req, res) => {
     res.sendFile(__dirname + "/index.html")
