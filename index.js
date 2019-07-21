@@ -18,6 +18,7 @@ require("dotenv").load();
 
 const app = express()
 
+app.disable('x-powered-by');
 app.use(upload())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
