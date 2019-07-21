@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node index",
     "dev": "nodemon --exec babel-node index",
-    "test": "mocha --timeout 30000",
+    "test": "mocha --timeout 30000"
   },
   "author": "Alessandro Prudencio da Cruz Silva",
   "license": "ISC",
