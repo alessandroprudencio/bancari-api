@@ -22,7 +22,7 @@ const createReservation = async (req, res) => {
 
     try {
         await knex('reservations').insert(req.body)
-        res.json({ message: "Reserva efetuada com sucesso!" })
+        res.send({ message: "Reserva efetuada com sucesso!" })
     } catch (error) {
         res.status(500).send({ message: error })
     }

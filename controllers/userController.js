@@ -32,7 +32,7 @@ const createUser = async (req, res) => {
 
     try {
         await knex('users').insert(req.body)
-        res.json({ message: "Usuário cadastrado com sucesso!" })
+        res.send({ message: "Usuário cadastrado com sucesso!" })
     } catch (error) {
         if(error.code =='23505')return res.status(400).send({message:`O e-mail '${req.body.email}' já esta em uso !`})
         res.status(500).send({ message: error })

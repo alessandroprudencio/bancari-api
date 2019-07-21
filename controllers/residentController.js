@@ -23,7 +23,7 @@ const createResident = async (req, res) => {
 
     try {
         await (knex('residents').insert(req.body))
-        res.json({ message: "Morador cadastrado com sucesso!" })
+        res.send({ message: "Morador cadastrado com sucesso!" })
     } catch (error) {
         if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
         res.status(500).send({ message: error })

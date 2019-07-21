@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index",
-    "dev": "nodemon --exec babel-node index"
+    "dev": "nodemon --exec babel-node index",
+    "test": "mocha --timeout 30000",
+    "build": "babel ./ -D -d dist --presets env"
   },
   "author": "Alessandro Prudencio da Cruz Silva",
   "license": "ISC",
@@ -18,14 +20,15 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.19.0",
+    "mysql2": "^1.6.5",
     "nodemailer": "^6.2.1",
-    "pg": "^7.11.0",
+    "uuid": "^3.3.2",
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "jest-cli": "^24.8.0",
+    "nodemon": "^1.19.1"
   }
 }

@@ -22,7 +22,7 @@ const createRealty = async (req, res) => {
 
     try {
         await knex('realtys').insert(req.body)
-        res.json({ message: "Imóvel cadastrado com sucesso!" })
+        res.send({ message: "Imóvel cadastrado com sucesso!" })
     } catch (error) {
         res.status(500).send({ message: error })
     }
