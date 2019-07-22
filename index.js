@@ -40,6 +40,9 @@ app.use('/reservation', verifyJwt, reservationRoute)
 import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
+import forgotPassword from './routes/forgotPassword'
+app.use('/forgotPassword', forgotPassword)
+
 app.use('/uploads',verifyJwt, express.static(path.resolve(__dirname, '.')))
 
 app.use('/', (req, res) => {

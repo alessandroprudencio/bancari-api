@@ -38,36 +38,6 @@ const createUser = async (req, res) => {
         res.status(500).send({ message: error })
     }
 
-
-    // const transporter = await nodemailer.createTransport({
-    //     service:process.env.EMAIL_service,
-    //     port: process.env.EMAIL_port,
-    //     auth: {
-    //         user: process.env.EMAIL_user,
-    //         pass: process.env.EMAIL_pass
-    //     }
-    //   })
-
-    // const mailOptions = {
-    //     from: 'gestao_condominio@bancari.com.br',
-    //     to: email,
-    //     subject: 'Confirmação de Email Bancari Gestão Condominio',
-    //     html: `
-    //         <p>Por favor confirme seu email clicando no link <a href="${process.env.CLIENT_URL}">${process.env.CLIENT_URL}</a></p>
-
-    //     `
-    // };
-
-    // await transporter.sendMail(mailOptions,(error, info)=>{
-    //     if (error) {
-    //       res.send(error)
-    //     } else {
-    //      res.send('Email enviado: ' + info.response);
-    //     }
-    //   });
-    //   return
-
-
 }
 
 const updateUser = async (req, res) => {
