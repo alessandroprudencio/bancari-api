@@ -31,8 +31,8 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
-        await knex('users').insert(req.body)
-        res.send({ message: "Usuário cadastrado com sucesso!" })
+       let user =  await knex('users').insert(req.body).returning('*')
+        res.send({ message: "Usuário cadastrado com sucesso!", data: user })
     } catch (error) {
         if(error.code =='23505')return res.status(400).send({message:`O e-mail '${req.body.email}' já esta em uso !`})
         res.status(500).send({ message: error })
