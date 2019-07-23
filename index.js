@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import validator from 'validator'
 import nodemailer from 'nodemailer'
 import upload from 'express-fileupload'
+import cors from 'cors'
 
 global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
 global.bcrypt = bcrypt
@@ -19,6 +20,8 @@ require("dotenv").load();
 const app = express()
 
 app.disable('x-powered-by');
+app.use(cors())
+app.options('*', cors())
 app.use(upload())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
