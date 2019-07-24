@@ -17,7 +17,8 @@ var io = require('socket.io')(server);
 server.listen(process.env.PORT)
 
 global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
-global.io = io
+ 
+io.on('connection', socket=>{global.socket =  socket});
 global.bcrypt = bcrypt
 global.jwt = jwt
 global.validator = validator

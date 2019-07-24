@@ -56,43 +56,46 @@
             <img v-if="user.image" v-for="user in users" :src="/file/+user.image" width="150" />
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script>
+       
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                image :'',
+                users:[]
+            },
+            methods: {
+                getUser() {
+                    axios.get('https://bancari-api.herokuapp.com/user')
+                        .then(res => {
+                            this.users = res.data
+                        })
+            }
+        },
+        mounted(){
+            this.getUser()
+        },
+        created(){
+            let socket = io();
+            socket.on('create_occurrence', function (data) {
+                iziToast.info({
+                    title: 'Hello',
+                    message: 'Novo ocorrencia ' + data.message,
+                        });
+                    });
+        }
+    
+        })
+    
+    
+    </script>
+
+
 </body>
 
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
-<script>
-   
-    var app = new Vue({
-        el: '#app',
-        data: {
-            message: 'Hello Vue!',
-            image :'',
-            users:[]
-        },
-        methods: {
-            getUser() {
-                axios.get('https://bancari-api.herokuapp.com/user')
-                    .then(res => {
-                        this.users = res.data
-                    })
-        }
-    },
-    mounted(){
-        this.getUser()
-    },
-    created(){
-        let socket = io();
-        socket.on('create_occurrence', function (data) {
-            iziToast.info({
-                title: 'Hello',
-                message: 'Novo ocorrencia ' + data.message,
-                    });
-                });
-    }
-
-    })
-
-
-</script>
