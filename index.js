@@ -38,7 +38,7 @@ import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
 import userRoute from './routes/userRoute'
-app.use('/user',verifyJwt, userRoute)
+app.use('/user', userRoute)
 
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
