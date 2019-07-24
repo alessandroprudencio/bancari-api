@@ -15,15 +15,15 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 server.listen(process.env.PORT)
-
-global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
  
-io.on('connection', socket=>{global.socket =  socket});
+io.on('connection', socket=>global.socket =  socket)
 global.bcrypt = bcrypt
 global.jwt = jwt
 global.validator = validator
 global.nodemailer = nodemailer
 global.path = path
+global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
+
 
 app.disable('x-powered-by');
 app.use(cors())

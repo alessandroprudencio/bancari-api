@@ -17,9 +17,7 @@ const getByIdOccurrence = async (req, res) => {
 
 const createOccurrence = async (req, res) => {
     const { user_id, message } = req.body
-
     if (!user_id || !message) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
-
     try {
         await knex('occurrences').insert(req.body)
         await socket.emit('create_occurrence', {message:message})
