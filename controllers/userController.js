@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
-        let user = await knex('users').insert(req.body).returning(['id', 'name', 'email', 'image', 'admin'])
+        let user = await knex('users').insert(req.body).returning(['id', 'name', 'email', 'image', 'admin', 'morador', 'sindico'])
         if (user[0].admin == true) {
             await knex.raw(`CREATE DATABASE "${user[0].id.replace(/-/g, "_")}"`)
             await knex.migrate.latest([{ database: `"${user[0].id.replace(/-/g, "_")}"` }])
