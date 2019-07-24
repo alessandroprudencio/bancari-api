@@ -64,7 +64,7 @@ const deleteUser = async (req, res) => {
         let user = await knex.select('id').from('users').where({ id: req.params.id })
         if (!user.length) res.status(404).send({ message: "Usuário não encontrado" })
         let token = req.headers.authorization.split(" ")[1]
-        if (jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
+        // if (jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
         await knex('users').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
     } catch (err) {
