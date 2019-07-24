@@ -32,7 +32,7 @@ const createUser = async (req, res) => {
 
     try {
         let user =  await knex('users').insert(req.body).returning(['id','name','email','image','admin'])
-        await knex.raw(`CREATE DATABASE "${user[0].id.replace(/-/g, "_")}"`)
+        if(user.admin==true)await knex.raw(`CREATE DATABASE "${user[0].id.replace(/-/g, "_")}"`)
         res.send({ message: "Usuário cadastrado com sucesso!", data: user })
     } catch (err) {
         console.log(err)
