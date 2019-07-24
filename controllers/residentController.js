@@ -1,16 +1,16 @@
 const getResident = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents'))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
 const getByIdResident = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'address', 'phone', 'number_address').from('residents').where({ id: req.params.id }))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -24,9 +24,9 @@ const createResident = async (req, res) => {
     try {
         await (knex('residents').insert(req.body))
         res.send({ message: "Morador cadastrado com sucesso!" })
-    } catch (error) {
-        if (error.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
-        res.status(500).send({ message: error })
+    } catch (err) {
+        if (err.code == "ER_DUP_ENTRY") res.status(400).send({ message: 'Email já cadastrado!' })
+        res.status(500).send({ message: err })
     }
 }
 
@@ -35,8 +35,8 @@ const updateResident = async (req, res) => {
     try {
         await knex('residents').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 
 }
@@ -52,8 +52,8 @@ const deleteResident = async (req, res) => {
 
         await knex('residents').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 
 

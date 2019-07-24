@@ -6,9 +6,9 @@ const upload = async (req, res, type, allowedMimes) => {
     if (size > 5 * (1024 * 1024)) return res.status(400).send('Tamanho de arquivo não permitido !')
     if (!existsSync("uploads")) mkdirSync("uploads", 0o776, (err) => { if (err) return res.status(500).send(err) })
     if (!existsSync(`uploads/${type}`)) mkdirSync(`uploads/${type}`, 0o776, (err) => { if (err) return res.status(500).send(err) })
-    const nameFile = `uploads/${type}/` + md5 + (path.extname(name))
+    const nameFile = `${type}/` + md5 + (path.extname(name))
     try {
-        await req.files.file.mv(nameFile)
+        await req.files.file.mv('uploads/' + nameFile)
         return nameFile
     } catch (err) {
         return res.status(500).send(err)

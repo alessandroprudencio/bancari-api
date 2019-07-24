@@ -31,9 +31,9 @@ const forgotPassword = async (req, res) => {
         `
     };
 
-    await transporter.sendMail(mailOptions,(error, info)=>{
-        if (error) {
-          res.send(error)
+    await transporter.sendMail(mailOptions,(err, info)=>{
+        if (err) {
+          res.send(err)
         } else {
              res.send(`OK! E-mail para recuperação de senha enviado para o email  ${email}`)
         }

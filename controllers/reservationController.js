@@ -1,8 +1,8 @@
 const getReservation = async (req, res) => {
     try {
         res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date'))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 
 }
@@ -10,8 +10,8 @@ const getReservation = async (req, res) => {
 const getByIdReservation = async (req, res) => {
     try {
         res.send(await knex.select('*').from('reservations').where({ id: req.params.id }))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -23,8 +23,8 @@ const createReservation = async (req, res) => {
     try {
         await knex('reservations').insert(req.body)
         res.send({ message: "Reserva efetuada com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -33,8 +33,8 @@ const updateReservation = async (req, res) => {
     try {
         await knex('reservations').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -47,8 +47,8 @@ const deleteReservation = async (req, res) => {
 
         await knex('reservations').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 

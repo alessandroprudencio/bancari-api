@@ -3,16 +3,16 @@ import upload from '../middleware/uploadFile'
 const getUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users'))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
 const getUserByIdUser = async (req, res) => {
     try {
         res.send(await knex.select('id', 'name', 'email', 'admin', 'image').from('users').where({ id: req.params.id }))
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -31,11 +31,13 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
-       let user =  await knex('users').insert(req.body).returning('id','name','email','image','admin')
+        let user =  await knex('users').insert(req.body).returning(['id','name','email','image','admin'])
+        await knex.raw(`CREATE DATABASE "${user[0].id.replace(/-/g, "_")}"`)
         res.send({ message: "Usuário cadastrado com sucesso!", data: user })
-    } catch (error) {
-        if(error.code =='23505')return res.status(400).send({message:`O e-mail '${req.body.email}' já esta em uso !`})
-        res.status(500).send({ message: error })
+    } catch (err) {
+        console.log(err)
+        if(err.code =='23505')return res.status(400).send({message:`O e-mail '${req.body.email}' já esta em uso !`})
+        res.status(500).send({ message: err })
     }
 
 }
@@ -48,8 +50,8 @@ const updateUser = async (req, res) => {
     try {
         await knex('users').update(req.body)
         res.send({ message: "Atualizado com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 }
 
@@ -62,8 +64,8 @@ const deleteUser = async (req, res) => {
         if (jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem permissões para exclusão" })
         await knex('users').where({ id: req.params.id }).delete()
         res.send({ message: "Excluido com sucesso!" })
-    } catch (error) {
-        res.status(500).send({ message: error })
+    } catch (err) {
+        res.status(500).send({ message: err })
     }
 
 
