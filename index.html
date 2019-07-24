@@ -85,7 +85,7 @@
             socket.on('create_occurrence', function (data) {
                 iziToast.info({
                     title: 'Hello',
-                    message: 'Novo ocorrencia ' + data.message,
+                    message: 'Novo ocorrencia ' + data.message + ' - ' + data.created_at ,
                         });
                     });
         }
