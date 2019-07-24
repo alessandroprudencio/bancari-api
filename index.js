@@ -14,10 +14,14 @@ global.jwt = jwt
 global.validator = validator
 global.nodemailer = nodemailer
 global.path = path
-
 require("dotenv").load();
 
 const app = express()
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+server.listen(process.env.PORT)
+global.io = io
 
 app.disable('x-powered-by');
 app.use(cors())
@@ -32,7 +36,7 @@ import authRoute from './routes/authRoute'
 app.use('/login', authRoute)
 
 import userRoute from './routes/userRoute'
-app.use('/user', userRoute)
+app.use('/user',verifyJwt, userRoute)
 
 import residentRoute from './routes/residentRoute'
 app.use('/resident', verifyJwt, residentRoute)
@@ -43,6 +47,9 @@ app.use('/reservation', verifyJwt, reservationRoute)
 import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
+import occurrenceRoute from './routes/occurrenceRoute'
+app.use('/occurrence', occurrenceRoute)
+
 import forgotPassword from './routes/forgotPassword'
 app.use('/forgotPassword', forgotPassword)
 
@@ -52,6 +59,5 @@ app.use('/', (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
 
-app.listen(process.env.PORT, () => { console.log('Servidor iniciado ' + process.env.PORT) })
 
 
