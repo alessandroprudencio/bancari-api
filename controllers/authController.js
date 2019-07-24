@@ -10,7 +10,7 @@ const login = async (req, res) => {
     if (bcrypt.compareSync(req.body.password, user[0].password)) {
         delete user[0].password
         res.status(200).send({ email: email, token: jwt.sign({ user: user[0] }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
-    }else res.status(401).send({ message: 'Dados inválidos' })
+    } else res.status(401).send({ message: 'Dados inválidos' })
 
 }
 

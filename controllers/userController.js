@@ -27,19 +27,19 @@ const createUser = async (req, res) => {
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
 
-    if (req.files && Object.keys(req.files).length != 0)req.body.image = await upload(req, res, 'profile', ['image/jpeg', 'image/pjpeg', 'image/png'])
+    if (req.files && Object.keys(req.files).length != 0) req.body.image = await upload(req, res, 'profile', ['image/jpeg', 'image/pjpeg', 'image/png'])
     req.body.password = bcrypt.hashSync(password, 10)
 
     try {
-        let user =  await knex('users').insert(req.body).returning(['id','name','email','image','admin'])
-        if(user[0].admin==true){
+        let user = await knex('users').insert(req.body).returning(['id', 'name', 'email', 'image', 'admin'])
+        if (user[0].admin == true) {
             await knex.raw(`CREATE DATABASE "${user[0].id.replace(/-/g, "_")}"`)
-            await knex.migrate.latest([{database:`"${user[0].id.replace(/-/g, "_")}"`}])
+            await knex.migrate.latest([{ database: `"${user[0].id.replace(/-/g, "_")}"` }])
         }
         res.send({ message: "Usuário cadastrado com sucesso!", data: user })
     } catch (err) {
         console.log(err)
-        if(err.code =='23505')return res.status(400).send({message:`O e-mail '${req.body.email}' já esta em uso !`})
+        if (err.code == '23505') return res.status(400).send({ message: `O e-mail '${req.body.email}' já esta em uso !` })
         res.status(500).send({ message: err })
     }
 
