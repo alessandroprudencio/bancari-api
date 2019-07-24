@@ -22,7 +22,6 @@ const createOccurrence = async (req, res) => {
 
     try {
         await knex('occurrences').insert(req.body)
-        
         io.on('connection', function(socket){
             socket.emit('create_occurrence', {message:message})
           });

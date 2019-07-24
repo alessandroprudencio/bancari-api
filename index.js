@@ -7,21 +7,22 @@ import validator from 'validator'
 import nodemailer from 'nodemailer'
 import upload from 'express-fileupload'
 import cors from 'cors'
-
-global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
-global.bcrypt = bcrypt
-global.jwt = jwt
-global.validator = validator
-global.nodemailer = nodemailer
-global.path = path
 require("dotenv").load();
 
 const app = express()
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
 server.listen(process.env.PORT)
+
+global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
 global.io = io
+global.bcrypt = bcrypt
+global.jwt = jwt
+global.validator = validator
+global.nodemailer = nodemailer
+global.path = path
 
 app.disable('x-powered-by');
 app.use(cors())
@@ -48,7 +49,7 @@ import realtyRoute from './routes/realtyRoute'
 app.use('/realty', verifyJwt, realtyRoute)
 
 import occurrenceRoute from './routes/occurrenceRoute'
-app.use('/occurrence', occurrenceRoute)
+app.use('/occurrence',verifyJwt, occurrenceRoute)
 
 import forgotPassword from './routes/forgotPassword'
 app.use('/forgotPassword', forgotPassword)
