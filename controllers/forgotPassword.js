@@ -47,7 +47,7 @@ const forgotPassword = async (req, res) => {
     let user = await knex('users').select('email', 'password', 'admin').whereRaw('email = ?', email)
     if (!user.length) return res.status(404).send({ message: 'E-mail não encontrado' })
 
-    if (bcrypt.compareSync(req.body.password, user[0].password)) return res.status(200).send({ email: email, token: jwt.sign({ user: req.body, admin: user[0].admin }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
+    if (bcrypt.compareSync(req.body.password, user.shift().password)) return res.status(200).send({ email: email, token: jwt.sign({ user: req.body, admin: user.shift().admin }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
     else res.status(401).send({ message: 'Dados inválidos' })
 
 }
