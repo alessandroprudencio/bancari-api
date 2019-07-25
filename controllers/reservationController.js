@@ -9,7 +9,7 @@ const getReservation = async (req, res) => {
 
 const getByIdReservation = async (req, res) => {
     try {
-        res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date')).where({ id: req.params.id }))
+        res.send(await knex('reservations').join('residents', 'reservations.resident_id', 'residents.id').select('residents.name', 'reservations.place', 'reservations.date')).where({ id: req.params.id })
     } catch (err) {
         res.status(500).send({ message: err })
     }

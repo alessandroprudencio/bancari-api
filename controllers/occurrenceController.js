@@ -9,7 +9,7 @@ const getOccurrence = async (req, res) => {
 
 const getByIdOccurrence = async (req, res) => {
     try {
-        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('users.name', 'occurrences.message')).where({ id: req.params.id }))
+        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('users.name', 'occurrences.message')).where({ id: req.params.id })
     } catch (err) {
         res.status(500).send({ message: err })
     }

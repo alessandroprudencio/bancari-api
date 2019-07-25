@@ -9,7 +9,7 @@ const getRealty = async (req, res) => {
 
 const getByIdRealty = async (req, res) => {
     try {
-        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address', 'realtys.id', 'realtys.number_address')).where({ id: req.params.id }))
+        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address', 'realtys.id', 'realtys.number_address')).where({ id: req.params.id })
     } catch (err) {
         res.status(500).send({ message: err })
     }
