@@ -4,8 +4,7 @@ exports.up = async  knex => {
         table.string('id', 50).unique().notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
         table.string('user_id', 50).references("id").inTable("users").index().onDelete("CASCADE")
         table.text('message').notNullable()
-        table.timestamp('created_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
-        table.timestamp('update_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6))
+        table.timestamps(true, true)
     })
 };
 

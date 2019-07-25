@@ -5,8 +5,7 @@ exports.up = async  knex => {
         table.string('owner_id', 50).references("id").inTable("residents").index().onDelete("CASCADE")
         table.text('address').notNullable()
         table.integer('number_address').notNullable()
-        table.timestamp('created_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
-        table.timestamp('update_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6))
+        table.timestamps(true, true)
     })
 };
 
