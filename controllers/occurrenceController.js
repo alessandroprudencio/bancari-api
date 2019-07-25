@@ -1,6 +1,6 @@
 const getOccurrence = async (req, res) => {
     try {
-        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('occurrences.id','occurrences.updated_at,','users.name as user_name','occurrences.message').orderBy('occurrences.updated_at','desc'))
+        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('occurrences.id','occurrences.updated_at','users.name as user_name','occurrences.message').orderBy('occurrences.updated_at','desc'))
     } catch (err) {
         res.status(500).send({ message: err })
     }
