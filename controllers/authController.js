@@ -24,10 +24,7 @@ const register = async (req,res)=>{
     delete req.body.confirmPassword
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
-
-    let token = req.headers.authorization.split(" ")[1]
-    if (jwt.decode(token).admin && jwt.decode(token).admin === false) return res.status(401).send({ message: "Usuário não tem cadastro de usuário" })
-
+  
     if (req.files && Object.keys(req.files).length != 0) req.body.image = await upload(req, res, 'profile', ['image/jpeg', 'image/pjpeg', 'image/png'])
     req.body.password = bcrypt.hashSync(password, 10)
 
