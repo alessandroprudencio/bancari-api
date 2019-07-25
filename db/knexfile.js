@@ -49,6 +49,13 @@ module.exports = {
       user: 'guscabrjqkgezj',
       password: '2860cbf4f11497d69e011e4c37e9fb6432c64ff295ffb593307a69434e7c273b'
     },
+    pool: {
+      afterCreate: function(connection, callback) {
+        connection.query('SET timezone = "America/Sao_Paulo";', function(err) {
+          callback(err, connection);
+        });
+      }
+   },
     migrations: {
       directory: __dirname + '/migrations',
     }
