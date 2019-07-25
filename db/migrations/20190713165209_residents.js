@@ -9,6 +9,7 @@ exports.up = async knex => {
         table.string('phone', 100).notNullable()
         table.integer('number_address').notNullable()
         table.timestamp('created_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
+        table.timestamp('update_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6))
     })
 }
 

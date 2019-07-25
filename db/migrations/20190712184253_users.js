@@ -10,6 +10,7 @@ exports.up = async knex => {
     table.boolean('morador').defaultTo(false)
     table.boolean('sindico').defaultTo(false)
     table.timestamp('created_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6)).notNullable()
+    table.timestamp('update_at', { precision: 6, useTz: true }).defaultTo(knex.fn.now(6))
   })
 }
 
