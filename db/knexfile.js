@@ -29,7 +29,8 @@ module.exports = {
     migrations: {
       directory: __dirname + '/migrations',
     },
-  },
+  }
+},
 //   development: {
 //   client: 'mysql',
 //   connection: {
@@ -88,5 +89,6 @@ module.exports = {
     }
   }
   
+}
 }
 
