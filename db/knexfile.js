@@ -44,10 +44,10 @@ module.exports = {
   production:{
     client: 'pg',
     connection: {
-      host: 'ec2-174-129-29-101.compute-1.amazonaws.com',
-      database: 'd69bc587hlphpp',
-      user: 'guscabrjqkgezj',
-      password: '2860cbf4f11497d69e011e4c37e9fb6432c64ff295ffb593307a69434e7c273b'
+      host: 'ec2-54-227-251-33.compute-1.amazonaws.com',
+      database: 'd8re6jq1vrl7en',
+      user: 'zgvqqwtoynkrxw',
+      password: '1e986a87621920c87539ed752bff3ef8ce4124f16beecc3ff8f488fab0c1a8a7'
     },
     migrations: {
       directory: __dirname + '/migrations',
