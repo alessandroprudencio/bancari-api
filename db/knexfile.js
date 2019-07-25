@@ -9,13 +9,6 @@ module.exports = {
       password: 'root',
       database: 'bancari',
     },
-    pool: {
-      afterCreate: function(connection, callback) {
-        connection.query('SET time_zone = America/Sao_Paulo;', function(err) {
-          callback(err, connection);
-        });
-      }
-    },
     migrations: {
       directory: __dirname + '/migrations',
     },
@@ -55,13 +48,6 @@ module.exports = {
       database: 'd69bc587hlphpp',
       user: 'guscabrjqkgezj',
       password: '2860cbf4f11497d69e011e4c37e9fb6432c64ff295ffb593307a69434e7c273b'
-    },
-    pool: {
-      afterCreate: function(connection, callback) {
-        connection.query("SET time_zone = UTC-04:00;", function(err) {
-          callback(err, connection);
-        });
-      }
     },
     migrations: {
       directory: __dirname + '/migrations',
