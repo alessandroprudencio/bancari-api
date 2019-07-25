@@ -51,7 +51,7 @@ module.exports = {
     },
     pool: {
       afterCreate: function(connection, callback) {
-        connection.query('SET timezone = utc-3;', function(err) {
+        connection.query('SET timezone = utc;', function(err) {
           callback(err, connection);
         });
       }
