@@ -51,7 +51,7 @@ module.exports = {
     },
     pool: {
       afterCreate: function(connection, callback) {
-        connection.query('SET timezone = brst;', function(err) {
+        connection.query('SET timezone = "America/Sao_Paulo"', function(err) {
           callback(err, connection);
         });
       }
