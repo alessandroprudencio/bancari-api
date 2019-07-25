@@ -5,7 +5,7 @@ exports.up = async  knex => {
         table.string('resident_id', 100).references("id").inTable("residents").index().onDelete("CASCADE")
         table.string('place').notNullable()
         table.datetime('date').notNullable()
-        table.timestamps(true, true,{ useTz: true, precision: 6 })
+        table.timestamps(true, true,[{ useTz: true}, {precision: 6}])
     })
 }
 
