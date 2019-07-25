@@ -1,6 +1,6 @@
 const getRealty = async (req, res) => {
     try {
-        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address', 'realtys.id', 'realtys.number_address'))
+        res.send(await knex('realtys').leftJoin('residents', 'realtys.owner_id', 'residents.id').select('residents.name', 'realtys.address', 'realtys.id', 'realtys.number_address').orderBy('realtys.update_at'))
     } catch (err) {
         res.status(500).send({ message: err })
     }
