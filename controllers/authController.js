@@ -14,7 +14,7 @@ const login = async (req, res) => {
 
 }
 
-const register = async (req,res)=>{
+const register = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
 
     if (!name || !email || !password || !confirmPassword) return res.status(400).send({ message: 'Por favor preencha todos os campos' })
@@ -24,7 +24,7 @@ const register = async (req,res)=>{
     delete req.body.confirmPassword
 
     if (password.length <= 6) return res.status(400).send({ message: 'Senha muito curta..' })
-  
+
     if (req.files && Object.keys(req.files).length != 0) req.body.image = await upload(req, res, 'profile', ['image/jpeg', 'image/pjpeg', 'image/png'])
     req.body.password = bcrypt.hashSync(password, 10)
 
@@ -42,4 +42,4 @@ const register = async (req,res)=>{
     }
 }
 
-export {login, register}
+export { login, register }

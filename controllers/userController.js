@@ -2,7 +2,7 @@ import upload from '../middleware/uploadFile'
 
 const getUser = async (req, res) => {
     try {
-        res.send(await knex.select('id', 'name', 'email', 'admin', 'image','created_at').from('users'))
+        res.send(await knex.select('id', 'name', 'email', 'admin', 'morador', 'sindico', 'image', 'created_at').from('users'))
     } catch (err) {
         res.status(500).send({ message: err })
     }
