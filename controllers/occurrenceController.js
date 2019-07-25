@@ -1,6 +1,6 @@
 const getOccurrence = async (req, res) => {
     try {
-        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('occurrences.id','occurrences.updated_at','users.name as user_name','occurrences.message').orderBy('occurrences.updated_at','desc'))
+        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('occurrences.id', 'occurrences.updated_at', 'users.name as user_name', 'occurrences.message').orderBy('occurrences.updated_at', 'desc'))
     } catch (err) {
         res.status(500).send({ message: err })
     }
@@ -9,7 +9,7 @@ const getOccurrence = async (req, res) => {
 
 const getByIdOccurrence = async (req, res) => {
     try {
-        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('users.name', 'occurrences.message')).where({ id: req.params.id })
+        res.send(await knex('occurrences').join('users', 'occurrences.user_id', 'users.id').select('users.name', 'occurrences.message').where({ id: req.params.id }))
     } catch (err) {
         res.status(500).send({ message: err })
     }
@@ -30,7 +30,7 @@ const createOccurrence = async (req, res) => {
 const updateOccurrence = async (req, res) => {
 
     try {
-        await knex('occurrences').where({id:req.params.id}).update(req.body).update('updated_at', knex.fn.now())
+        await knex('occurrences').where({ id: req.params.id }).update(req.body).update('updated_at', knex.fn.now())
         res.send({ message: "Atualizado com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })

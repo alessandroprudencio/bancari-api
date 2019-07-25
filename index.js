@@ -52,6 +52,9 @@ app.use('/realty', verifyJwt, realtyRoute)
 import occurrenceRoute from './routes/occurrenceRoute'
 app.use('/occurrence',verifyJwt, occurrenceRoute)
 
+import expenditureRoute from './routes/expenditureRoute'
+app.use('/expenditure',verifyJwt, expenditureRoute)
+
 import forgotPassword from './routes/forgotPassword'
 app.use('/forgotPassword', forgotPassword)
 
