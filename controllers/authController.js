@@ -5,11 +5,11 @@ const login = async (req, res) => {
 
     if (!validator.isEmail(email)) return res.status(400).send({ message: 'E-mail inválido' })
 
-    let user = await knex('users').select('email', 'password', 'admin').whereRaw('email = ?', email)
+    let user = await knex('users').select('email', 'id', 'password', 'admin').whereRaw('email = ?', email)
     if (!user.length) return res.status(404).send({ message: 'E-mail não encontrado' })
     if (bcrypt.compareSync(req.body.password, user[0].password)) {
         delete user[0].password
-        res.status(200).send({ email: email, token: jwt.sign({ user: user[0] }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
+        res.status(200).send({id:id, email: email, token: jwt.sign({ user: user[0] }, process.env.SECRET_TOKEN, { expiresIn: '1h' }) })
     } else res.status(401).send({ message: 'Dados inválidos' })
 
 }
