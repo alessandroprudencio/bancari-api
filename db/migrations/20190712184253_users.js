@@ -9,7 +9,7 @@ exports.up = async knex => {
     table.boolean('admin').defaultTo(false)
     table.boolean('morador').defaultTo(false)
     table.boolean('sindico').defaultTo(false)
-    table.timestamps(true, true)
+    table.timestamps(true, true,{ useTz: true })
   })
 }
 

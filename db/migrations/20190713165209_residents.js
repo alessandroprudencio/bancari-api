@@ -8,7 +8,7 @@ exports.up = async knex => {
         table.text('address').notNullable()
         table.string('phone', 100).notNullable()
         table.integer('number_address').notNullable()
-        table.timestamps(true, true)
+        table.timestamps(true, true,{ useTz: true })
     })
 }
 
