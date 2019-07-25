@@ -21,7 +21,7 @@ const createOccurrence = async (req, res) => {
     try {
         let occurrence = await knex('occurrences').insert(req.body).returning(['id', 'created_at', 'user_id'])
         await socket.emit('create_occurrence', { id: occurrence[0].id, message: message, created_at: occurrence[0].created_at, user_id: occurrence[0].user_id })
-        res.send([{ id: occurrence[0].id, user_id: occurrence[0].user_id, message: "Ocorrencia cadastrada com sucesso!" }])
+        res.send({ id: occurrence[0].id, user_id: occurrence[0].user_id, message: "Ocorrencia cadastrada com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })
     }
