@@ -54,7 +54,7 @@ const updateUser = async (req, res) => {
     if (password) req.body.password = bcrypt.hashSync(password, 10)
 
     try {
-        await knex('users').update(req.body)
+        await knex('users').update(req.body).update('updated_at', knex.fn.now())
         res.send({ message: "Atualizado com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })

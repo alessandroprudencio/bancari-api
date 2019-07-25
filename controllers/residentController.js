@@ -33,7 +33,7 @@ const createResident = async (req, res) => {
 const updateResident = async (req, res) => {
 
     try {
-        await knex('residents').update(req.body)
+        await knex('residents').update(req.body).update('updated_at', knex.fn.now())
         res.send({ message: "Atualizado com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })

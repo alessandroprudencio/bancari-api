@@ -31,7 +31,7 @@ const createReservation = async (req, res) => {
 const updateReservation = async (req, res) => {
 
     try {
-        await knex('reservations').update(req.body)
+        await knex('reservations').update(req.body).update('updated_at', knex.fn.now())
         res.send({ message: "Atualizado com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })

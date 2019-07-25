@@ -30,7 +30,7 @@ const createOccurrence = async (req, res) => {
 const updateOccurrence = async (req, res) => {
 
     try {
-        await knex('occurrences').update(req.body)
+        await knex('occurrences').update(req.body).update('updated_at', knex.fn.now())
         res.send({ message: "Atualizado com sucesso!" })
     } catch (err) {
         res.status(500).send({ message: err })
