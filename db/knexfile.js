@@ -9,6 +9,13 @@ module.exports = {
       password: 'root',
       database: 'bancari',
     },
+    pool: {
+      afterCreate: function(connection, callback) {
+        connection.query('SET time_zone = America/Sao_Paulo;', function(err) {
+          callback(err, connection);
+        });
+      }
+    },
     migrations: {
       directory: __dirname + '/migrations',
     },
