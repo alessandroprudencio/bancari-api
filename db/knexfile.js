@@ -8,7 +8,7 @@ module.exports = {
       user: 'postgres',
       password: 'root',
       database: 'bancari',
-      timezone: 'utc-3',
+      timezone: 'utc',
     },
     migrations: {
       directory: __dirname + '/migrations',
@@ -49,7 +49,7 @@ module.exports = {
       database: 'd69bc587hlphpp',
       user: 'guscabrjqkgezj',
       password: '2860cbf4f11497d69e011e4c37e9fb6432c64ff295ffb593307a69434e7c273b',
-      timezone: 'utc-3'
+      timezone: 'utc'
     },
     migrations: {
       directory: __dirname + '/migrations',
