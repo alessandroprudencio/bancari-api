@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production babel-node index",
+    "start": "NODE_ENV=production node dist",
     "dev": "nodemon --exec babel-node index",
     "test": "mocha --timeout 30000",
     "build":"babel / -s -D -d dist --presets env"
