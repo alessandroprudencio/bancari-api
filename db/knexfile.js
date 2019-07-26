@@ -4,14 +4,15 @@ module.exports = {
   development:{
     client: 'pg',
     connection: {
-      host: '127.0.0.1',
-      user: 'postgres',
-      password: 'root',
+      host: 'bancari.c9tznxtz79mr.us-east-1.rds.amazonaws.com',
       database: 'bancari',
+      user: 'postgres',
+      port:5432,
+      password: 'QDJwdIhN8cC1MOsDLHv7'
     },
     migrations: {
       directory: __dirname + '/migrations',
-    },
+    }
   },
 //   development: {
 //   client: 'mysql',

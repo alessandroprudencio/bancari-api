@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "--exec babel-node index",
+    "start": "babel-node index",
     "dev": "nodemon --exec babel-node index",
     "test": "mocha --timeout 30000"
   },
