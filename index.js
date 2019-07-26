@@ -24,7 +24,7 @@ global.jwt = jwt
 global.validator = validator
 global.nodemailer = nodemailer
 global.path = path
-global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
+global.knex = require('knex')(require('./db/knexfile')['production'])
 
 
 app.disable('x-powered-by');
