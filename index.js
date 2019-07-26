@@ -7,6 +7,7 @@ import validator from 'validator'
 import nodemailer from 'nodemailer'
 import upload from 'express-fileupload'
 import cors from 'cors'
+import qr from 'qr-image'
 require("dotenv").load();
 
 const app = express()
@@ -24,6 +25,7 @@ global.jwt = jwt
 global.validator = validator
 global.nodemailer = nodemailer
 global.path = path
+global.qr = qr
 global.knex = require('knex')(require('./db/knexfile')[process.env.NODE_ENV || 'development'])
 
 
@@ -56,6 +58,9 @@ app.use('/occurrence',verifyJwt, occurrenceRoute)
 
 import expenditureRoute from './routes/expenditureRoute'
 app.use('/expenditure',verifyJwt, expenditureRoute)
+
+import entryScheduleRoute from './routes/entryScheduleRoute'
+app.use('/entry_schedule', entryScheduleRoute)
 
 import forgotPassword from './routes/forgotPassword'
 app.use('/forgotPassword', forgotPassword)
