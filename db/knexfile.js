@@ -47,6 +47,7 @@ module.exports = {
       host: 'bancari.c9tznxtz79mr.us-east-1.rds.amazonaws.com',
       database: 'bancari',
       user: 'postgres',
+      port:5432,
       password: 'QDJwdIhN8cC1MOsDLHv7'
     },
     migrations: {
