@@ -14,7 +14,9 @@ const app = express()
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(process.env.PORT)
+server.listen(process.env.PORT,()=>{
+    console.log('ouvindo porta ' + process.env.PORT)
+})
  
 io.on('connection', socket=>global.socket =  socket)
 global.bcrypt = bcrypt
@@ -52,8 +54,8 @@ app.use('/realty', verifyJwt, realtyRoute)
 import occurrenceRoute from './routes/occurrenceRoute'
 app.use('/occurrence',verifyJwt, occurrenceRoute)
 
-// import expenditureRoute from './routes/expenditureRoute'
-// app.use('/expenditure',verifyJwt, expenditureRoute)
+import expenditureRoute from './routes/expenditureRoute'
+app.use('/expenditure',verifyJwt, expenditureRoute)
 
 import forgotPassword from './routes/forgotPassword'
 app.use('/forgotPassword', forgotPassword)
