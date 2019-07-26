@@ -44,10 +44,10 @@ module.exports = {
   production:{
     client: 'pg',
     connection: {
-      host: 'ec2-54-227-251-33.compute-1.amazonaws.com',
-      database: 'd8re6jq1vrl7en',
-      user: 'zgvqqwtoynkrxw',
-      password: '1e986a87621920c87539ed752bff3ef8ce4124f16beecc3ff8f488fab0c1a8a7'
+      host: 'bancari.c9tznxtz79mr.us-east-1.rds.amazonaws.com',
+      database: 'bancari',
+      user: 'postgres',
+      password: 'QDJwdIhN8cC1MOsDLHv7'
     },
     migrations: {
       directory: __dirname + '/migrations',
