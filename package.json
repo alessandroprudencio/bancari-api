@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node dist",
     "dev": "nodemon --exec babel-node index",
     "test": "mocha --timeout 30000",
-    "build":"mkdir dist && babel-node --inspect ./ -s -d dist"
+    "build":"mkdir dist && --exec babel ./ -s -d dist"
   },
   "author": "Alessandro Prudencio da Cruz Silva",
   "license": "ISC",
