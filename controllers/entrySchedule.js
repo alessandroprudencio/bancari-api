@@ -1,7 +1,7 @@
 const qrCode = async (req,res)=>{
     const {nome, cpf, placa_veiculo } = req.body
 
-    let token =await jwt.sign({cpf:cpf,nome:nome,placa_veiculo:placa_veiculo}, process.env.SECRET_TOKEN, { expiresIn: '1h' })
+    let token = await jwt.sign({cpf:cpf,nome:nome,placa_veiculo:placa_veiculo}, process.env.SECRET_TOKEN, { expiresIn: '1h' })
    try {
         await  knex('entry_schedules').insert(req.body)
    } catch (error) {
