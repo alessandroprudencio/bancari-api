@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production babel-node index.js",
+    "start": "NODE_ENV=production node dist",
     "dev": "nodemon --exec babel-node index",
-    "test": "mocha --timeout 30000"
+    "test": "mocha --timeout 30000",
+    "build":"mkdir dist && babel index.js -s -d dist"
   },
   "author": "Alessandro Prudencio da Cruz Silva",
   "license": "ISC",
